@@ -31,6 +31,6 @@
   "private": true,
   "main": "server.js",
   "scripts": {
-    "start": "nodemon bot.js"
+    "start": "node bot.js"
   }
 }
