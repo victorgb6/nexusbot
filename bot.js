@@ -16,3 +16,17 @@ bot.on('message', function (msg) {
   var chatId = msg.chat.id;
   bot.sendMessage(chatId, "I'm alive!");
 });
+
+// Matches /love
+bot.onText(/\/love/, function (msg) {
+  var chatId = msg.chat.id;
+  var opts = {
+      reply_to_message_id: msg.message_id,
+      reply_markup: JSON.stringify({
+        keyboard: [
+          ['Yes, you are the bot of my life ❤'],
+          ['No, sorry there is another one...']]
+      })
+    };
+    bot.sendMessage(chatId, 'Do you love me?', opts);
+});
