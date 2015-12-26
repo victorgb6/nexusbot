@@ -29,8 +29,5 @@
   "devDependencies": {},
   "bundleDependencies": [],
   "private": true,
-  "scripts": {
-    "start": "node bot.js"
-  },
-  "main": "server.js"
+  "main": "bot.js"
 }
