@@ -24,7 +24,8 @@
   },
   "dependencies": {
     "express": "~3.4.4",
-    "node-telegram-bot-api": "^0.17.0"
+    "node-telegram-bot-api": "^0.17.0",
+    "request": "^2.67.0"
   },
   "devDependencies": {},
   "bundleDependencies": [],
