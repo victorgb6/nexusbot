@@ -131,9 +131,6 @@ var SampleApp = function() {
         self.populateCache();
         self.setupTerminationHandlers();
 
-        //Creates the bot hook and methods
-        //bot.init();
-
         // Create the express server and routes.
         self.initializeServer();
     };
@@ -158,5 +155,7 @@ var SampleApp = function() {
  *  main():  Main code.
  */
 var zapp = new SampleApp();
+//Creates the bot hook and methods
+bot.init();
 zapp.initialize();
 zapp.start();
