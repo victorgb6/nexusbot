@@ -27,7 +27,7 @@ bot.onText(/\/giphy/, function(msg) {
       if (!error && response.statusCode == 200) {
         body = JSON.parse(body);
         console.log(body);
-        bot.sendMessage(chatId, body.data.images.original.url);
+        bot.sendDocument(chatId, body.data.images.original.url);
       }
     });
   }
