@@ -24,7 +24,8 @@ var SampleApp = function() {
     self.setupVariables = function() {
         //  Set the environment variables we need.
         self.ipaddress = process.env.OPENSHIFT_NODEJS_IP;
-        self.port      = process.env.OPENSHIFT_NODEJS_PORT || 8080;
+        self.port      = process.env.OPENSHIFT_NODEJS_PORT || 8081;
+        self.domain    = process.env.OPENSHIFT_APP_DNS;
 
         if (typeof self.ipaddress === "undefined") {
             //  Log errors on OpenShift but continue w/ 127.0.0.1 - this
@@ -155,7 +156,7 @@ var SampleApp = function() {
  *  main():  Main code.
  */
 var zapp = new SampleApp();
-//Creates the bot hook and methods
-bot.init();
 zapp.initialize();
+//Creates the bot hook and methods
+bot.init(zapp.ipaddress, 8080, zapp.domain);
 zapp.start();
