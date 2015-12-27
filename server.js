@@ -132,7 +132,7 @@ var SampleApp = function() {
         self.setupTerminationHandlers();
 
         //Creates the bot hook and methods
-        bot.init();
+        //bot.init();
 
         // Create the express server and routes.
         self.initializeServer();
