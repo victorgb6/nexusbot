@@ -2,6 +2,7 @@
 //  OpenShift sample Node application
 var express = require('express');
 var fs      = require('fs');
+var bot     = require('./bot');
 
 
 /**
@@ -130,6 +131,9 @@ var SampleApp = function() {
         self.populateCache();
         self.setupTerminationHandlers();
 
+        //Creates the bot hook and methods
+        bot.init();
+
         // Create the express server and routes.
         self.initializeServer();
     };
@@ -156,4 +160,3 @@ var SampleApp = function() {
 var zapp = new SampleApp();
 zapp.initialize();
 zapp.start();
-
