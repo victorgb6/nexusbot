@@ -26,8 +26,8 @@ bot.onText(/\/giphy/, function(msg) {
     request('http://api.giphy.com/v1/gifs/translate?s='+search+'&api_key=dc6zaTOxFJmzC', function (error, response, body) {
       if (!error && response.statusCode == 200) {
         body = JSON.parse(body);
-        console.log(body);
-        bot.sendDocument(chatId, body.data.images.original.url);
+         var photo = request(body.data.images.original.url);
+        bot.sendPhoto(chatId, photo);
       }
     });
   }
