@@ -21,9 +21,10 @@ bot.onText(/\/pinpon register/, function(msg) {
   var usersRef = fireRef.child("users");
   console.log('Msg->',msg);
   var user = {};
-  user[msg.from.id]['first_name'] = msg.form.first_name;
-  user[msg.from.id]['last_name'] = msg.form.last_name;
-  user[msg.from.id]['username'] = msg.form.username;
+  user[msg.from.id] = {first_name: msg.form.first_name,
+                       last_name: msg.form.last_name,
+                       username: msg.form.username
+                      };
   console.log('user->',user);
   usersRef.set(user, function(error) {
     if (error) {
