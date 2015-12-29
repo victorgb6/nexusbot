@@ -20,14 +20,11 @@ bot.onText(/\/pinpon register/, function(msg) {
   var chatId = msg.chat.id;
   var usersRef = fireRef.child("users");
   console.log('Msg->',msg);
-  // var obj = {};
-  // obj[msg.user.id]['first_name'] = msg.user.first_name;
-  // usersRef.set({
-  //   alanisawesome: {
-  //     date_of_birth: "June 23, 1912",
-  //     full_name: "Alan Turing"
-  //   }
-  // });
+  var user = {};
+  user[msg.from.id]['first_name'] = msg.form.first_name;
+  user[msg.from.id]['last_name'] = msg.form.last_name;
+  user[msg.from.id]['username'] = msg.form.username;
+  usersRef.set(user);
 });
 
 //Giphy command
