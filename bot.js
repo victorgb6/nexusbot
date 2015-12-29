@@ -25,10 +25,11 @@ bot.onText(/\/pinpon register/, function(msg) {
   user[msg.from.id]['last_name'] = msg.form.last_name;
   user[msg.from.id]['username'] = msg.form.username;
   usersRef.set(user, function(error) {
-  if (error) {
-    console.log("Data could not be saved." + error);
-  } else {
-    console.log("Data saved successfully.");
+    if (error) {
+      console.log("Data could not be saved." + error);
+    } else {
+      console.log("Data saved successfully.");
+    }
   });
 });
 
