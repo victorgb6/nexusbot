@@ -24,6 +24,7 @@ bot.onText(/\/pinpon register/, function(msg) {
   user[msg.from.id]['first_name'] = msg.form.first_name;
   user[msg.from.id]['last_name'] = msg.form.last_name;
   user[msg.from.id]['username'] = msg.form.username;
+  console.log('user->',user);
   usersRef.set(user, function(error) {
     if (error) {
       console.log("Data could not be saved." + error);
