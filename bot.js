@@ -9,14 +9,26 @@ var port = process.env.OPENSHIFT_NODEJS_PORT;
 var host = process.env.OPENSHIFT_NODEJS_IP;
 var domain = process.env.OPENSHIFT_APP_DNS;
 
+var fireRef = new Firebase("https://nexus-bot.firebaseio.com/");
+
 var bot = new TelegramBot(token, {webHook: {port: port, host: host}});
 // OpenShift enroutes :443 request to OPENSHIFT_NODEJS_PORT
 bot.setWebHook(domain+':443/bot'+token);
 console.log('webhook set!');
 
-var saveUser = function() {
-
-};
+bot.onText(/\/pinpon register/, function(msg) {
+  var chatId = msg.chat.id;
+  var usersRef = fireRef.child("users");
+  console.log('Msg->',msg);
+  // var obj = {};
+  // obj[msg.user.id]['first_name'] = msg.user.first_name;
+  // usersRef.set({
+  //   alanisawesome: {
+  //     date_of_birth: "June 23, 1912",
+  //     full_name: "Alan Turing"
+  //   }
+  // });
+});
 
 //Giphy command
 bot.onText(/\/giphy/, function(msg) {
