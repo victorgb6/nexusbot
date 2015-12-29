@@ -21,9 +21,9 @@ bot.onText(/\/pinpon register/, function(msg) {
   var usersRef = fireRef.child("users");
   console.log('Msg->',msg);
   var user = {};
-  user[msg.from.id] = {first_name: msg.form.first_name,
-                       last_name: msg.form.last_name,
-                       username: msg.form.username
+  user[msg.from.id] = {first_name: msg.from.first_name,
+                       last_name: msg.from.last_name,
+                       username: msg.from.username
                       };
   console.log('user->',user);
   usersRef.set(user, function(error) {
@@ -37,7 +37,6 @@ bot.onText(/\/pinpon register/, function(msg) {
 
 //Giphy command
 bot.onText(/\/giphy/, function(msg) {
-  console.log('Msg->',msg);
   var chatId = msg.chat.id;
   var search = msg.text.split("/giphy ")[1];
   if (search) {
