@@ -47,9 +47,18 @@ bot.onText(/\/pinpon challenge/, function(msg) {
   usersRef.once("value", function(snapshot) {
     if ( snapshot.child(userTo).exists() ) {
       //is registered
-      challengesRef.push({userFrom: userFrom,
+      var challenge = {userFrom: userFrom,
                        userTo: userTo,
-                       accepted: false});
+                       accepted: false};
+      challengesRef.set(challenge, function(error) {
+        if (error) {
+          console.log("Data could not be saved." + error);
+          bot.sendMessage(chatId, "@"+userTo+" has been already challenged!");
+        } else {
+          console.log("Data saved successfully.");
+          bot.sendMessage(chatId, "@"+userTo+" you have been challenge by @"+userFrom+" type /pinpon accept or /pinpon decline to get started.");
+        }
+      });
     } else {
       //is NOT registered
       bot.sendMessage(chatId, "The user @"+userTo+" is not yet registered he must type: /pinpon register to be able to register.")
