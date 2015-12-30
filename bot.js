@@ -16,6 +16,7 @@ var bot = new TelegramBot(token, {webHook: {port: port, host: host}});
 bot.setWebHook(domain+':443/bot'+token);
 console.log('webhook set!');
 
+//Register user to firebase
 bot.onText(/\/pinpon register/, function(msg) {
   var chatId = msg.chat.id;
   var usersRef = fireRef.child("users");
@@ -33,6 +34,29 @@ bot.onText(/\/pinpon register/, function(msg) {
       bot.sendMessage(chatId, "You're all set. Challenge someone by typing /pinpon challenge [name]");
     }
   });
+});
+
+//challenge another user
+bot.onText(/\/pinpon challenge/, function(msg) {
+  var chatId = msg.chat.id;
+  var userFrom = msg.from.username;
+  var userTo = msg.text.split("/pinpon challenge ")[1];
+  var usersRef = fireRef.child("users");
+  var challengesRef = fireRef.child("challenges");
+  //check if challenged user is registered
+  usersRef.once("value", function(snapshot) {
+    if ( snapshot.child(userTo).exists() ) {
+      //is registered
+      challengesRef.push({userFrom: userFrom,
+                       userTo: userTo,
+                       accepted: false});
+    } else {
+      //is NOT registered
+      bot.sendMessage(chatId, "The user @"+userTo+" is not yet registered he must type: /pinpon register to be able to register.")
+    }
+  });
+
+
 });
 
 //Giphy command
