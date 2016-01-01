@@ -40,15 +40,17 @@ bot.onText(/\/pinpon register/, function(msg) {
 bot.onText(/\/pinpon challenge/, function(msg) {
   console.log('MSG->',msg);
   var chatId = msg.chat.id;
+  var userFromId = msg.from.id;
   var userFrom = msg.from.username;
   var userTo = msg.text.split("/pinpon challenge ")[1];
   var usersRef = fireRef.child("users");
   var challengesRef = fireRef.child("challenges");
   //check if challenged user is registered
   usersRef.once("value", function(snapshot) {
-    if ( snapshot.child(userTo).exists() ) {
+    if ( snapshot.child(userFromId).exists() ) {
       //is registered
       var challenge = {userFrom: userFrom,
+                       userFromId: userFromId,
                        userTo: userTo,
                        accepted: false};
       challengesRef.set(challenge, function(error) {
