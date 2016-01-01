@@ -38,6 +38,7 @@ bot.onText(/\/pinpon register/, function(msg) {
 
 //challenge another user
 bot.onText(/\/pinpon challenge/, function(msg) {
+  console.log('MSG->',msg);
   var chatId = msg.chat.id;
   var userFrom = msg.from.username;
   var userTo = msg.text.split("/pinpon challenge ")[1];
@@ -53,15 +54,15 @@ bot.onText(/\/pinpon challenge/, function(msg) {
       challengesRef.set(challenge, function(error) {
         if (error) {
           console.log("Data could not be saved." + error);
-          bot.sendMessage(chatId, "@"+userTo+" has been already challenged!");
+          bot.sendMessage(chatId, userTo+" has been already challenged!");
         } else {
           console.log("Data saved successfully.");
-          bot.sendMessage(chatId, "@"+userTo+" you have been challenge by @"+userFrom+" type /pinpon accept or /pinpon decline to get started.");
+          bot.sendMessage(chatId, userTo+" you have been challenge by @"+userFrom+" type /pinpon accept or /pinpon decline to get started.");
         }
       });
     } else {
       //is NOT registered
-      bot.sendMessage(chatId, "The user @"+userTo+" is not yet registered he must type: /pinpon register to be able to register.")
+      bot.sendMessage(chatId, "The user "+userTo+" is not yet registered he must type: /pinpon register to be able to register.")
     }
   });
 
