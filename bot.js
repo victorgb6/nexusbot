@@ -53,7 +53,7 @@ bot.onText(/\/pinpon challenge/, function(msg) {
                        userFromId: userFromId,
                        userTo: userTo,
                        accepted: false};
-      challengesRef.set(challenge, function(error) {
+      challengesRef.push(challenge, function(error) {
         if (error) {
           console.log("Data could not be saved." + error);
           bot.sendMessage(chatId, userTo+" has been already challenged!");
