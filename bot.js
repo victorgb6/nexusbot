@@ -16,12 +16,6 @@ var bot = new TelegramBot(token, {webHook: {port: port, host: host}});
 bot.setWebHook(domain+':443/bot'+token);
 console.log('webhook set!');
 
-bot.on('message', function (msg) {
-  console.log('Message->',msg);
-  var chatId = msg.chat.id;
-  bot.sendMessage(chatId, "I'm alive!");
-});
-
 //Register user to firebase
 bot.onText(/\/pinpon register/, function(msg) {
   console.log('Register->',msg);
