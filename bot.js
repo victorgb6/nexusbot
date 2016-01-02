@@ -21,6 +21,7 @@ var checkIfChallengeExists = function(userFrom, userTo) {
 };
 
 var checkIfUserExists = function(userId) {
+  console.log('check user');
   return new Promise(function(resolve, reject) {
     var userRef = fireRef.child("users");
     usersRef.child(userId).once("value", function(snapshot) {
