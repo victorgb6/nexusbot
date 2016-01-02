@@ -27,7 +27,7 @@ var checkIfUserExists = function(userId) {
       var exists = (snapshot.val() !== null);
       resolve(exists);
     });
-  }
+  });
 };
 
 //Register user to firebase
@@ -71,7 +71,7 @@ bot.onText(/\/pinpon challenge/, function(msg) {
    }else{
      console.log('From user doesnt exists');
    }
-  })
+  });
       /*//is registered
       var challenge = {userFrom: userFrom,
                        userFromId: userFromId,
