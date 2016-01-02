@@ -18,6 +18,7 @@ console.log('webhook set!');
 
 //Register user to firebase
 bot.onText(/\/pinpon register/, function(msg) {
+  console.log('Register->',msg);
   var chatId = msg.chat.id;
   var usersRef = fireRef.child("users");
   var user = {};
