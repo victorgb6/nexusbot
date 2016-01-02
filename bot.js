@@ -16,17 +16,30 @@ var bot = new TelegramBot(token, {webHook: {port: port, host: host}});
 bot.setWebHook(domain+':443/bot'+token);
 console.log('webhook set!');
 
+var checkIfChallengeExists = function(userFrom, userTo) {
+
+};
+
+var checkIfUserExists = function(userId) {
+  return new Promise(function(resolve, reject) {
+    var userRef = fireRef.child("users");
+    usersRef.child(userId).once("value", function(snapshot) {
+      var exists = (snapshot.val() !== null);
+      resolve(exists);
+    });
+  }
+};
+
 //Register user to firebase
 bot.onText(/\/pinpon register/, function(msg) {
-  console.log('Register->',msg);
   var chatId = msg.chat.id;
   var usersRef = fireRef.child("users/"+msg.from.id);
   var user = {};
   if ( msg.from.username ) {
     user = {first_name: msg.from.first_name,
-                         last_name: msg.from.last_name || '',
-                         username: msg.from.username
-                        };
+            last_name: msg.from.last_name || "",
+            username: msg.from.username
+          };
     usersRef.set(user, function(error) {
       if (error) {
         console.log("Data could not be saved." + error);
@@ -52,9 +65,14 @@ bot.onText(/\/pinpon challenge/, function(msg) {
   var usersRef = fireRef.child("users");
   var challengesRef = fireRef.child("challenges");
   //check if challenged user is registered
-  usersRef.once("value", function(snapshot) {
-    if ( snapshot.child(userFromId).exists() ) {
-      //is registered
+  checkIfUserExists(userFromId).then(function(data) {
+   if (data) {
+     console.log('From user exists.');
+   }else{
+     console.log('From user doesnt exists');
+   }
+  })
+      /*//is registered
       var challenge = {userFrom: userFrom,
                        userFromId: userFromId,
                        userTo: userTo,
@@ -67,12 +85,7 @@ bot.onText(/\/pinpon challenge/, function(msg) {
           console.log("Data saved successfully.");
           bot.sendMessage(chatId, userTo+" you have been challenge by @"+userFrom+" type /pinpon accept or /pinpon decline to get started.");
         }
-      });
-    } else {
-      //is NOT registered
-      bot.sendMessage(chatId, "The user "+userTo+" is not yet registered he must type: /pinpon register to be able to register.")
-    }
-  });
+      });*/
 
 
 });
