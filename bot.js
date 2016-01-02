@@ -73,7 +73,7 @@ bot.onText(/\/pinpon challenge/, function(msg) {
      console.log('From user doesnt exists');
    }
  });*/
-  if (usersRef.child(userFromId)) {
+  if (usersRef.child('3')) {
     console.log('User ',userFromId,'exists');
   }else {
     console.log('No exists');
