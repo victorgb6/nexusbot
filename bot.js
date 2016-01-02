@@ -20,21 +20,26 @@ console.log('webhook set!');
 bot.onText(/\/pinpon register/, function(msg) {
   console.log('Register->',msg);
   var chatId = msg.chat.id;
-  var usersRef = fireRef.child("users");
+  var usersRef = fireRef.child("users/"+msg.from.id);
   var user = {};
-  user[msg.from.id] = {first_name: msg.from.first_name,
-                       last_name: msg.from.last_name,
-                       username: msg.from.username
-                      };
-  usersRef.set(user, function(error) {
-    if (error) {
-      console.log("Data could not be saved." + error);
-      bot.sendMessage(chatId, "There was an error saving your user");
-    } else {
-      console.log("Data saved successfully.");
-      bot.sendMessage(chatId, "You're all set. Challenge someone by typing /pinpon challenge [name]");
-    }
-  });
+  if ( msg.from.username ) {
+    user = {first_name: msg.from.first_name,
+                         last_name: msg.from.last_name || '',
+                         username: msg.from.username
+                        };
+    usersRef.set(user, function(error) {
+      if (error) {
+        console.log("Data could not be saved." + error);
+        bot.sendMessage(chatId, "There was an error saving your user");
+      } else {
+        console.log("Data saved successfully.");
+        bot.sendMessage(chatId, "You're all set. Challenge someone by typing /pinpon challenge [name]");
+      }
+    });
+  } else {
+    bot.sendMessage(chatId, "You must set yourself a Telegram alias, in your Telegram settings.");
+
+  }
 });
 
 //challenge another user
