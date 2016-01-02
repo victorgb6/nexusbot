@@ -66,13 +66,18 @@ bot.onText(/\/pinpon challenge/, function(msg) {
   var usersRef = fireRef.child("users");
   var challengesRef = fireRef.child("challenges");
   //check if challenged user is registered
-  checkIfUserExists(userFromId).then(function(data) {
+  /*checkIfUserExists(userFromId).then(function(data) {
    if (data) {
      console.log('From user exists.');
    }else{
      console.log('From user doesnt exists');
    }
-  });
+ });*/
+  if (usersRef.child(userFromId)) {
+    console.log('User ',userFromId,'exists');
+  }else {
+    console.log('No exists');
+  }
       /*//is registered
       var challenge = {userFrom: userFrom,
                        userFromId: userFromId,
