@@ -16,18 +16,23 @@ var bot = new TelegramBot(token, {webHook: {port: port, host: host}});
 bot.setWebHook(domain+':443/bot'+token);
 console.log('webhook set!');
 
-var checkIfChallengeExists = function(userFrom, userTo) {
-
-};
-
-var checkIfUserExists = function(userId) {
-  console.log('check user');
-  return new Promise(function(resolve, reject) {
-    var userRef = fireRef.child("users");
-    usersRef.child(userId).once("value", function(snapshot) {
-      var exists = (snapshot.val() !== null);
-      resolve(exists);
-    });
+var saveChallenge = function(userFrom, userFromId, userTo, userToId) {
+  var challenge = {userFrom: userFrom,
+                   userFromId: userFromId,
+                   userTo: userTo,
+                   userToId: userToId,
+                   accepted: false
+                 };
+  var challengesRef = fireRef.child("challenges");
+  challengesRef.set(challenge, function(error) {
+    if (error) {
+      console.log("Data could not be saved." + error);
+      bot.sendMessage(chatId, "Challenge cannot be saved");
+    } else {
+      console.log("Data saved successfully.");
+      bot.sendMessage(userToId, "@"+userTo+" you have been challenge by @"+userFrom+" type /pinpon accept or /pinpon decline to get started.");
+      bot.sendMessage(userFromId, "Your challenge has been sent to @"+userTo);
+    }
   });
 };
 
@@ -62,38 +67,33 @@ bot.onText(/\/pinpon challenge/, function(msg) {
   var chatId = msg.chat.id;
   var userFromId = msg.from.id;
   var userFrom = msg.from.username;
+  var userToId = null;
   var userTo = msg.text.split("/pinpon challenge ")[1];
   var usersRef = fireRef.child("users");
-  var challengesRef = fireRef.child("challenges");
-  //check if challenged user is registered
-  /*checkIfUserExists(userFromId).then(function(data) {
-   if (data) {
-     console.log('From user exists.');
-   }else{
-     console.log('From user doesnt exists');
-   }
- });*/
-  if (usersRef.child('3')) {
-    console.log('User ',userFromId,'exists');
-  }else {
-    console.log('No exists');
-  }
-      /*//is registered
-      var challenge = {userFrom: userFrom,
-                       userFromId: userFromId,
-                       userTo: userTo,
-                       accepted: false};
-      challengesRef.push(challenge, function(error) {
-        if (error) {
-          console.log("Data could not be saved." + error);
-          bot.sendMessage(chatId, userTo+" has been already challenged!");
+
+  usersRef.child(userFromId).once("value", function(snapshot) {
+    if (snapshot.val() !== null) {
+    //userFrom exists
+    //check if challenged user is registered
+      usersRef.once("value", function(snapshot) {
+        snapshot.forEach(function(childSnapshot) {
+          var childData = childSnapshot.val();
+          childData.username === userTo ? userToId = childData.id : null;
+        });
+        if (userToId) {
+          saveChallenge(userFrom, userFromId, userTo, userToId);
+          console.log('Saving Challenge');
         } else {
-          console.log("Data saved successfully.");
-          bot.sendMessage(chatId, userTo+" you have been challenge by @"+userFrom+" type /pinpon accept or /pinpon decline to get started.");
+          console.log("Challenged user doesn't exists.");
+          bot.sendMessage(chatId, userTo+" is not registered yet.");
         }
-      });*/
+      });
 
-
+    } else {
+      console.log("User doesn't exists.");
+      bot.sendMessage(chatId, userFromId+" is not registered yet.");
+    }
+  });
 });
 
 //Giphy command
