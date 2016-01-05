@@ -75,6 +75,7 @@ bot.onText(/\/pinpon challenge/, function(msg) {
     if (snapshot.val() !== null) {
     //userFrom exists
     //check if challenged user is registered
+    console.log('userTo->',userTo);
       usersRef.once("value", function(snapshot) {
         snapshot.forEach(function(childSnapshot) {
           var childData = childSnapshot.val();
