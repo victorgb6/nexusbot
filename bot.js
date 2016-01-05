@@ -23,7 +23,7 @@ var saveChallenge = function(userFrom, userFromId, userTo, userToId) {
                    userToId: userToId,
                    accepted: false
                  };
-  var challengesRef = fireRef.child("challenges");
+  var challengesRef = fireRef.child("challenges/"+userFromId+"-"+userToId);
   challengesRef.set(challenge, function(error) {
     if (error) {
       console.log("Data could not be saved." + error);
