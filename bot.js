@@ -79,6 +79,7 @@ bot.onText(/\/pinpon challenge/, function(msg) {
       usersRef.once("value", function(snapshot) {
         snapshot.forEach(function(childSnapshot) {
           var childData = childSnapshot.val();
+          console.log('Snap Username->', childData.username);
           childData.username === userTo ? userToId = childData.id : null;
         });
         if (userToId) {
