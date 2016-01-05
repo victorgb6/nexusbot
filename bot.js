@@ -80,7 +80,7 @@ bot.onText(/\/pinpon challenge/, function(msg) {
         snapshot.forEach(function(childSnapshot) {
           var childData = childSnapshot.val();
           console.log('Snap Username->', childData.username);
-          childData.username.toLowerCase() === userTo.toLowerCase() ? userToId = childData.id : null;
+          childData.username.toLowerCase() === userTo.toLowerCase() ? userToId = childSnapshot.key() : null;
         });
         console.log('userToId->',userToId);
         if (userToId) {
