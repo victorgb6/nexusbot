@@ -80,8 +80,9 @@ bot.onText(/\/pinpon challenge/, function(msg) {
         snapshot.forEach(function(childSnapshot) {
           var childData = childSnapshot.val();
           console.log('Snap Username->', childData.username);
-          childData.username === userTo ? userToId = childData.id : null;
+          childData.username.toLowerCase() === userTo.toLowerCase() ? userToId = childData.id : null;
         });
+        console.log('userToId->',userToId);
         if (userToId) {
           saveChallenge(userFrom, userFromId, userTo, userToId);
           console.log('Saving Challenge');
