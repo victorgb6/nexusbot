@@ -110,7 +110,10 @@ bot.onText(/\/pinpon accept/, function(msg) {
   match = {};
   challengesRef.once("value", function(snapshot) {
     snapshot.forEach(function(childSnapshot) {
-      userFromId.indexOf( childSnapshot.key() ) !== -1  ? found = true; challenge = childSnapshot; : found = false;
+      if ( userFromId.indexOf( childSnapshot.key() ) !== -1) {
+        found = true;
+        challenge = childSnapshot;
+      }
     });
     if (found) {
       var matchesRef = fireRef.child("matches");
