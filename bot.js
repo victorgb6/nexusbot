@@ -99,6 +99,43 @@ bot.onText(/\/pinpon challenge/, function(msg) {
   });
 });
 
+//accept a challenge
+bot.onText(/\/pinpon accept/, function(msg) {
+  console.log('MSG accept->',msg);
+  var chatId = msg.chat.id;
+  var userFromId = msg.from.id;
+  var challengesRef = fireRef.child("challenges");
+  var found = false;
+  var challenge,
+  match = {};
+  challengesRef.once("value", function(snapshot) {
+    snapshot.forEach(function(childSnapshot) {
+      userFromId.indexOf( childSnapshot.key() ) !== -1 ) ? found = true; challenge = childSnapshot; : found = false;
+    });
+    if (found) {
+      var matchesRef = fireRef.child("matches");
+
+      match.userFromId = challenge.userFromId;
+      match.userFrom   = challenge.userFrom;
+      match.userToId   = challenge.userToId;
+      match.userTo     = challenge.userTo;
+      challengesRef.child(userFromId+"-"+userToId).remove();
+      matchesRef.push(match, function(error) {
+        if (error) {
+          console.log("Data could not be saved." + error);
+          bot.sendMessage(chatId, "There was an error accepting the challenge.");
+        } else {
+          console.log("Data saved successfully.");
+          bot.sendMessage(chatId, "Challenge accepted! Report your scores by typing /pinpon report [your score]:[their score].");
+        }
+      });
+    } else {
+      bot.sendMessage(chatId, "You don't have any challenge to accept.");
+    }
+  });
+
+});
+
 //Giphy command
 bot.onText(/\/giphy/, function(msg) {
   var chatId = msg.chat.id;
