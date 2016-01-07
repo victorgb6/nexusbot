@@ -30,7 +30,7 @@ var saveChallenge = function(userFrom, userFromId, userTo, userToId) {
       bot.sendMessage(chatId, "Challenge cannot be saved");
     } else {
       console.log("Data saved successfully.");
-      bot.sendMessage(userToId, "@"+userTo+" you have been challenge by @"+userFrom+" type /pinpon accept or /pinpon decline to get started.");
+      bot.sendMessage(userToId, "@"+userTo+" you have been challenge by @"+userFrom+" type /accept or /decline to get started.");
       bot.sendMessage(userFromId, "Your challenge has been sent to @"+userTo);
     }
   });
@@ -52,7 +52,7 @@ bot.onText(/\/register/, function(msg) {
         bot.sendMessage(chatId, "There was an error saving your user");
       } else {
         console.log("Data saved successfully.");
-        bot.sendMessage(chatId, "You're all set. Challenge someone by typing /pinpon challenge [name]");
+        bot.sendMessage(chatId, "You're all set. Challenge someone by typing /challenge [name]");
       }
     });
   } else {
@@ -130,7 +130,7 @@ bot.onText(/\/accept/, function(msg) {
           bot.sendMessage(chatId, "There was an error accepting the challenge.");
         } else {
           console.log("Data saved successfully.");
-          bot.sendMessage(chatId, "Challenge accepted! Report your scores by typing /pinpon report [your score]:[their score].");
+          bot.sendMessage(chatId, "Challenge accepted! Report your scores by typing /report [your score]:[their score].");
         }
       });
     } else {
