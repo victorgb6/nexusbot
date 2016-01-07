@@ -37,7 +37,7 @@ var saveChallenge = function(userFrom, userFromId, userTo, userToId) {
 };
 
 //Register user to firebase
-bot.onText(/\/pinpon register/, function(msg) {
+bot.onText(/\/register/, function(msg) {
   var chatId = msg.chat.id;
   var usersRef = fireRef.child("users/"+msg.from.id);
   var user = {};
@@ -62,13 +62,13 @@ bot.onText(/\/pinpon register/, function(msg) {
 });
 
 //challenge another user
-bot.onText(/\/pinpon challenge/, function(msg) {
+bot.onText(/\/challenge/, function(msg) {
   console.log('MSG->',msg);
   var chatId = msg.chat.id;
   var userFromId = msg.from.id;
   var userFrom = msg.from.username;
   var userToId = null;
-  var userTo = msg.text.split("/pinpon challenge ")[1];
+  var userTo = msg.text.split("/challenge ")[1];
   var usersRef = fireRef.child("users");
 
   usersRef.child(userFromId).once("value", function(snapshot) {
@@ -100,7 +100,7 @@ bot.onText(/\/pinpon challenge/, function(msg) {
 });
 
 //accept a challenge
-bot.onText(/\/pinpon accept/, function(msg) {
+bot.onText(/\/accept/, function(msg) {
   console.log('MSG accept->',msg);
   var chatId = msg.chat.id;
   var userFromId = msg.from.id;
