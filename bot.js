@@ -68,7 +68,7 @@ bot.onText(/\/challenge/, function(msg) {
   var userFromId = msg.from.id;
   var userFrom = msg.from.username;
   var userToId = null;
-  var userTo = msg.text.split("/challenge ")[1];
+  var userTo = msg.text.split("/challenge @")[1];
   var usersRef = fireRef.child("users");
 
   usersRef.child(userFromId).once("value", function(snapshot) {
@@ -88,7 +88,7 @@ bot.onText(/\/challenge/, function(msg) {
           console.log('Saving Challenge');
         } else {
           console.log("Challenged user doesn't exists.");
-          bot.sendMessage(chatId, userTo+" is not registered yet.");
+          bot.sendMessage(chatId, "@"+userTo+" is not registered yet.");
         }
       });
 
