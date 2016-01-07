@@ -37,7 +37,8 @@ var saveChallenge = function(userFrom, userFromId, userTo, userToId) {
 };
 
 //Register user to firebase
-bot.onText(/\/register/, function(msg) {
+bot.onText(/\/register/, function(msg, match) {
+  console.log('MSG->',msg,'MATCH->',match);
   var chatId = msg.chat.id;
   var usersRef = fireRef.child("users/"+msg.from.id);
   var user = {};
@@ -62,7 +63,7 @@ bot.onText(/\/register/, function(msg) {
 });
 
 //challenge another user
-bot.onText(/\/pinpon challenge/, function(msg, match) {
+bot.onText(/\/challenge/, function(msg, match) {
   console.log('MSG->',msg,'MATCH->',match);
   var chatId = msg.chat.id;
   var userFromId = msg.from.id;
