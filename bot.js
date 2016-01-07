@@ -123,7 +123,7 @@ bot.onText(/\/pinpon accept/, function(msg) {
       match.userFrom   = challenge.userFrom;
       match.userToId   = challenge.userToId;
       match.userTo     = challenge.userTo;
-      challengesRef.child(challenge.userToId+"-"+challenge.userFromId).remove();
+      challengesRef.child(challenge.userFromId+"-"+challenge.userToId).remove();
       matchesRef.push(match, function(error) {
         if (error) {
           console.log("Data could not be saved." + error);
