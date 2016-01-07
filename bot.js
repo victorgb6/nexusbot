@@ -62,8 +62,8 @@ bot.onText(/\/pinpon register/, function(msg) {
 });
 
 //challenge another user
-bot.onText(/\/pinpon challenge/, function(msg) {
-  console.log('MSG->',msg);
+bot.onText(/\/pinpon challenge/, function(msg, match) {
+  console.log('MSG->',msg,'MATCH->',match);
   var chatId = msg.chat.id;
   var userFromId = msg.from.id;
   var userFrom = msg.from.username;
