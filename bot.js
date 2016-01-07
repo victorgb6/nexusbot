@@ -117,7 +117,7 @@ bot.onText(/\/pinpon accept/, function(msg) {
     });
     if (found) {
       var matchesRef = fireRef.child("matches");
-
+      console.log('Challenge->',challenge);
       match.userFromId = challenge.userFromId;
       match.userFrom   = challenge.userFrom;
       match.userToId   = challenge.userToId;
