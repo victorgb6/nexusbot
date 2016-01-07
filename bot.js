@@ -110,8 +110,7 @@ bot.onText(/\/pinpon accept/, function(msg) {
   match = {};
   challengesRef.once("value", function(snapshot) {
     snapshot.forEach(function(childSnapshot) {
-      console.log('From->',userFromId.toString(),'to->',childSnapshot.key().toString());
-      if ( userFromId.toString().indexOf( childSnapshot.key().toString() ) !== -1) {
+      if ( childSnapshot.key().indexOf( userFromId ) !== -1) {
         found = true;
         challenge = childSnapshot;
       }
@@ -123,7 +122,7 @@ bot.onText(/\/pinpon accept/, function(msg) {
       match.userFrom   = challenge.userFrom;
       match.userToId   = challenge.userToId;
       match.userTo     = challenge.userTo;
-      challengesRef.child(userFromId+"-"+userToId).remove();
+      challengesRef.child(userToId+"-"+userFromId).remove();
       matchesRef.push(match, function(error) {
         if (error) {
           console.log("Data could not be saved." + error);
