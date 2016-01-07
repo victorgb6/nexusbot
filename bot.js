@@ -137,20 +137,12 @@ bot.onText(/\/accept/, function(msg) {
       bot.sendMessage(chatId, "You don't have any challenge to accept.");
     }
   });
-
 });
 
-//Giphy command
-bot.onText(/\/giphy/, function(msg) {
+//Report a match
+bot.onText(/\/report/, function(msg) {
+  console.log('MSG report->',msg);
   var chatId = msg.chat.id;
-  var search = msg.text.split("/giphy ")[1];
-  if (search) {
-    request('http://api.giphy.com/v1/gifs/translate?s='+search+'&api_key=dc6zaTOxFJmzC', function (error, response, body) {
-      if (!error && response.statusCode == 200) {
-        body = JSON.parse(body);
-         var photo = request(body.data.images.original.url);
-        bot.sendDocument(chatId, photo);
-      }
-    });
-  }
+  var userFromId = msg.from.id;
+  var score = msg.text.split(' ');
 });
