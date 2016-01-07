@@ -30,14 +30,14 @@ var saveChallenge = function(userFrom, userFromId, userTo, userToId) {
       bot.sendMessage(chatId, "Challenge cannot be saved");
     } else {
       console.log("Data saved successfully.");
-      bot.sendMessage(userToId, "@"+userTo+" you have been challenge by @"+userFrom+" type /pinpon accept or /pinpon decline to get started.");
+      bot.sendMessage(userToId, "@"+userTo+" you have been challenge by @"+userFrom+" type /accept or /decline to get started.");
       bot.sendMessage(userFromId, "Your challenge has been sent to @"+userTo);
     }
   });
 };
 
 //Register user to firebase
-bot.onText(/\/pinpon register/, function(msg) {
+bot.onText(/\/register/, function(msg) {
   var chatId = msg.chat.id;
   var usersRef = fireRef.child("users/"+msg.from.id);
   var user = {};
@@ -52,7 +52,7 @@ bot.onText(/\/pinpon register/, function(msg) {
         bot.sendMessage(chatId, "There was an error saving your user");
       } else {
         console.log("Data saved successfully.");
-        bot.sendMessage(chatId, "You're all set. Challenge someone by typing /pinpon challenge [name]");
+        bot.sendMessage(chatId, "You're all set. Challenge someone by typing /challenge [name]");
       }
     });
   } else {
@@ -68,7 +68,7 @@ bot.onText(/\/pinpon challenge/, function(msg, match) {
   var userFromId = msg.from.id;
   var userFrom = msg.from.username;
   var userToId = null;
-  var userTo = msg.text.split("/pinpon challenge ")[1];
+  var userTo = msg.text.split("/challenge @")[1];
   var usersRef = fireRef.child("users");
 
   usersRef.child(userFromId).once("value", function(snapshot) {
@@ -88,7 +88,7 @@ bot.onText(/\/pinpon challenge/, function(msg, match) {
           console.log('Saving Challenge');
         } else {
           console.log("Challenged user doesn't exists.");
-          bot.sendMessage(chatId, userTo+" is not registered yet.");
+          bot.sendMessage(chatId, "@"+userTo+" is not registered yet.");
         }
       });
 
@@ -100,7 +100,7 @@ bot.onText(/\/pinpon challenge/, function(msg, match) {
 });
 
 //accept a challenge
-bot.onText(/\/pinpon accept/, function(msg) {
+bot.onText(/\/accept/, function(msg) {
   console.log('MSG accept->',msg);
   var chatId = msg.chat.id;
   var userFromId = msg.from.id;
@@ -110,46 +110,39 @@ bot.onText(/\/pinpon accept/, function(msg) {
   match = {};
   challengesRef.once("value", function(snapshot) {
     snapshot.forEach(function(childSnapshot) {
-      if ( userFromId.toString().indexOf( childSnapshot.key().toString() ) !== -1) {
+      //Check if finish with the user id
+      if ( new RegExp(userFromId+"$").test(childSnapshot.key()) ) {
         found = true;
-        challenge = childSnapshot;
+        challenge = childSnapshot.val();
       }
     });
     if (found) {
       var matchesRef = fireRef.child("matches");
-
+      console.log('Challenge->',challenge);
       match.userFromId = challenge.userFromId;
       match.userFrom   = challenge.userFrom;
       match.userToId   = challenge.userToId;
       match.userTo     = challenge.userTo;
-      challengesRef.child(userFromId+"-"+userToId).remove();
+      challengesRef.child(challenge.userFromId+"-"+challenge.userToId).remove();
       matchesRef.push(match, function(error) {
         if (error) {
           console.log("Data could not be saved." + error);
           bot.sendMessage(chatId, "There was an error accepting the challenge.");
         } else {
           console.log("Data saved successfully.");
-          bot.sendMessage(chatId, "Challenge accepted! Report your scores by typing /pinpon report [your score]:[their score].");
+          bot.sendMessage(chatId, "Challenge accepted! Report your scores by typing /report [your score]:[their score].");
         }
       });
     } else {
       bot.sendMessage(chatId, "You don't have any challenge to accept.");
     }
   });
-
 });
 
-//Giphy command
-bot.onText(/\/giphy/, function(msg) {
+//Report a match
+bot.onText(/\/report/, function(msg) {
+  console.log('MSG report->',msg);
   var chatId = msg.chat.id;
-  var search = msg.text.split("/giphy ")[1];
-  if (search) {
-    request('http://api.giphy.com/v1/gifs/translate?s='+search+'&api_key=dc6zaTOxFJmzC', function (error, response, body) {
-      if (!error && response.statusCode == 200) {
-        body = JSON.parse(body);
-         var photo = request(body.data.images.original.url);
-        bot.sendDocument(chatId, photo);
-      }
-    });
-  }
+  var userFromId = msg.from.id;
+  var score = msg.text.split(' ');
 });
