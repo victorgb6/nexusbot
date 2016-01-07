@@ -112,7 +112,7 @@ bot.onText(/\/pinpon accept/, function(msg) {
     snapshot.forEach(function(childSnapshot) {
       if ( childSnapshot.key().indexOf( userFromId ) !== -1) {
         found = true;
-        challenge = childSnapshot;
+        challenge = childSnapshot.val();
       }
     });
     if (found) {
