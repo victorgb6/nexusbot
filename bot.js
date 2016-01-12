@@ -80,26 +80,26 @@ bot.onText(/\/challenge/, function(msg, match) {
       usersRef.startAt(userTo.toLowerCase())
               .endAt(userTo.toLowerCase())
               .once("value", function(snapshot) {
-                  if (snapshot.val() !== null) {
-                    saveChallenge(userFrom, userFromId, userTo, snapshot.key());
-                    console.log('Saving Challenge');
-                  } else {
-                    console.log("Challenged user doesn't exists.");
-                    bot.sendMessage(chatId, "Challenged user @"+userTo+" is not registered yet.");
-                  }
-        // snapshot.forEach(function(childSnapshot) {
-        //   var childData = childSnapshot.val();
-        //   console.log('Snap Username->', childData.username);
-        //   childData.username.toLowerCase() === userTo.toLowerCase() ? userToId = childSnapshot.key() : null;
-        // });
-        // console.log('userToId->',userToId);
-        // if (userToId) {
-        //   saveChallenge(userFrom, userFromId, userTo, userToId);
-        //   console.log('Saving Challenge');
-        // } else {
-        //   console.log("Challenged user doesn't exists.");
-        //   bot.sendMessage(chatId, "@"+userTo+" is not registered yet.");
-        // }
+                  // if (snapshot.val() !== null) {
+                  //   saveChallenge(userFrom, userFromId, userTo, snapshot.key());
+                  //   console.log('Saving Challenge');
+                  // } else {
+                  //   console.log("Challenged user doesn't exists.");
+                  //   bot.sendMessage(chatId, "Challenged user @"+userTo+" is not registered yet.");
+                  // }
+        snapshot.forEach(function(childSnapshot) {
+          var childData = childSnapshot.val();
+          console.log('Snap Username->', childData.username);
+          childData.username.toLowerCase() === userTo.toLowerCase() ? userToId = childSnapshot.key() : null;
+        });
+        console.log('userToId->',userToId);
+        if (userToId) {
+          saveChallenge(userFrom, userFromId, userTo, userToId);
+          console.log('Saving Challenge');
+        } else {
+          console.log("Challenged user doesn't exists.");
+          bot.sendMessage(chatId, "@"+userTo+" is not registered yet.");
+        }
       });
 
     } else {
