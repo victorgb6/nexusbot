@@ -85,7 +85,7 @@ bot.onText(/\/challenge/, function(msg, match) {
                     console.log('Saving Challenge');
                   } else {
                     console.log("Challenged user doesn't exists.");
-                    bot.sendMessage(chatId, "@"+userTo+" is not registered yet.");
+                    bot.sendMessage(chatId, "Challenged user @"+userTo+" is not registered yet.");
                   }
         // snapshot.forEach(function(childSnapshot) {
         //   var childData = childSnapshot.val();
