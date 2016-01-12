@@ -47,7 +47,7 @@ bot.onText(/\/register/, function(msg, match) {
             last_name: msg.from.last_name || "",
             username: msg.from.username
           };
-    usersRef.set(user, function(error) {
+    usersRef.update(user, function(error) {
       if (error) {
         console.log("Data could not be saved." + error);
         bot.sendMessage(chatId, "There was an error saving your user");
@@ -58,8 +58,8 @@ bot.onText(/\/register/, function(msg, match) {
     });
   } else {
     bot.sendMessage(chatId, "You must set yourself a Telegram alias, in your Telegram settings.");
-
   }
+  usersRef.orderByChild("username");
 });
 
 //challenge another user
@@ -74,28 +74,37 @@ bot.onText(/\/challenge/, function(msg, match) {
 
   usersRef.child(userFromId).once("value", function(snapshot) {
     if (snapshot.val() !== null) {
-    //userFrom exists
+    //userFrom is registered
     //check if challenged user is registered
     console.log('userTo->',userTo);
-      usersRef.once("value", function(snapshot) {
-        snapshot.forEach(function(childSnapshot) {
-          var childData = childSnapshot.val();
-          console.log('Snap Username->', childData.username);
-          childData.username.toLowerCase() === userTo.toLowerCase() ? userToId = childSnapshot.key() : null;
-        });
-        console.log('userToId->',userToId);
-        if (userToId) {
-          saveChallenge(userFrom, userFromId, userTo, userToId);
-          console.log('Saving Challenge');
-        } else {
-          console.log("Challenged user doesn't exists.");
-          bot.sendMessage(chatId, "@"+userTo+" is not registered yet.");
-        }
+      usersRef.startAt(userTo)
+              .endAt(userTo)
+              .once("value", function(snapshot) {
+                  if (snapshot.val() !== null) {
+                    saveChallenge(userFrom, userFromId, userTo, userToId);
+                    console.log('Saving Challenge');
+                  } else {
+                    console.log("Challenged user doesn't exists.");
+                    bot.sendMessage(chatId, "@"+userTo+" is not registered yet.");
+                  }
+        // snapshot.forEach(function(childSnapshot) {
+        //   var childData = childSnapshot.val();
+        //   console.log('Snap Username->', childData.username);
+        //   childData.username.toLowerCase() === userTo.toLowerCase() ? userToId = childSnapshot.key() : null;
+        // });
+        // console.log('userToId->',userToId);
+        // if (userToId) {
+        //   saveChallenge(userFrom, userFromId, userTo, userToId);
+        //   console.log('Saving Challenge');
+        // } else {
+        //   console.log("Challenged user doesn't exists.");
+        //   bot.sendMessage(chatId, "@"+userTo+" is not registered yet.");
+        // }
       });
 
     } else {
       console.log("User doesn't exists.");
-      bot.sendMessage(chatId, userFromId+" is not registered yet.");
+      bot.sendMessage(chatId, "@"+userFromId+" is not registered yet.");
     }
   });
 });
