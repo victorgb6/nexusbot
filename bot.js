@@ -77,7 +77,7 @@ bot.onText(/\/challenge/, function(msg, match) {
     //userFrom is registered
     //check if challenged user is registered
     console.log('userTo->',userTo);
-      usersRef.orderBy('username')
+      usersRef.orderByChild('username')
               .startAt(userTo.toLowerCase())
               .endAt(userTo.toLowerCase())
               .on("value", function(snapshot) {
