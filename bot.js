@@ -81,9 +81,9 @@ bot.onText(/\/challenge/, function(msg, match) {
               .startAt(userTo.toLowerCase())
               .endAt(userTo.toLowerCase())
               .once("value", function(snapshot) {
-                  console.log('snapVal->',snapshot.val(),'snapKey->',snapshot.key());
+                  console.log('snapVal->',snapshot.val(),'snapName->',snapshot.name());
                   if (snapshot.val() !== null) {
-                    saveChallenge(userFrom, userFromId, userTo, snapshot.key());
+                    saveChallenge(userFrom, userFromId, userTo, snapshot.name());
                     console.log('Saving Challenge');
                   } else {
                     console.log("Challenged user doesn't exists.");
