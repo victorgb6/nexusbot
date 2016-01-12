@@ -80,7 +80,7 @@ bot.onText(/\/challenge/, function(msg, match) {
       usersRef.orderBy('username')
               .startAt(userTo.toLowerCase())
               .endAt(userTo.toLowerCase())
-              .once("value", function(snapshot) {
+              .on("value", function(snapshot) {
                   if (snapshot.val() !== null) {
                     saveChallenge(userFrom, userFromId, userTo, snapshot.key());
                     console.log('Saving Challenge');
