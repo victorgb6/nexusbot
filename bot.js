@@ -77,9 +77,7 @@ bot.onText(/\/challenge/, function(msg, match) {
     //userFrom is registered
     //check if challenged user is registered
     console.log('userTo->',userTo);
-      usersRef.startAt(userTo.toLowerCase())
-              .endAt(userTo.toLowerCase())
-              .once("value", function(snapshot) {
+      usersRef.once("value", function(snapshot) {
                   // if (snapshot.val() !== null) {
                   //   saveChallenge(userFrom, userFromId, userTo, snapshot.key());
                   //   console.log('Saving Challenge');
