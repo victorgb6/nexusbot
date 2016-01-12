@@ -131,7 +131,12 @@ bot.onText(/\/accept/, function(msg) {
       match.userFrom   = challenge.userFrom;
       match.userToId   = challenge.userToId;
       match.userTo     = challenge.userTo;
-      challengesRef.child(challenge.userFromId+"-"+challenge.userToId).remove();
+      console.log('Removing challenge->', challenge.userFromId+"-"+challenge.userToId);
+      challengesRef.child(challenge.userFromId+"-"+challenge.userToId).remove(function(error) {
+        if (error) {
+          console.log('Remove challenge fail');
+        }
+      });
       matchesRef.push(match, function(error) {
         if (error) {
           console.log("Data could not be saved." + error);
