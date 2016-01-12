@@ -30,7 +30,7 @@ var saveChallenge = function(userFrom, userFromId, userTo, userToId) {
       bot.sendMessage(chatId, "Challenge cannot be saved");
     } else {
       console.log("Data saved successfully.");
-      bot.sendMessage(userToId, "@"+userTo+" you have been challenge by @"+userFrom+" type /accept or /decline to get started.");
+      //bot.sendMessage(userToId, "@"+userTo+" you have been challenge by @"+userFrom+" type /accept or /decline to get started.");
       bot.sendMessage(userFromId, "Your challenge has been sent to @"+userTo);
     }
   });
@@ -81,9 +81,9 @@ bot.onText(/\/challenge/, function(msg, match) {
               .startAt(userTo.toLowerCase())
               .endAt(userTo.toLowerCase())
               .once("value", function(snapshot) {
-                  console.log('snapVal->',snapshot.val(),'snapKEYKEY->',snapshot.child().key());
+                  console.log('snapVal->',snapshot.val(),'snapKEYKEY->',snapshot.key());
                   if (snapshot.val() !== null) {
-                    saveChallenge(userFrom, userFromId, userTo, snapshot.child().key());
+                    saveChallenge(userFrom, userFromId, userTo, snapshot.key());
                     console.log('Saving Challenge');
                   } else {
                     console.log("Challenged user doesn't exists.");
