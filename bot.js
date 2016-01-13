@@ -36,6 +36,31 @@ var saveChallenge = function(userFrom, userFromId, userTo, userToId) {
   });
 };
 
+var saveMatch = function(chatId, challenge) {
+  var matchesRef = fireRef.child("matches");
+  console.log('Challenge->',challenge);
+  match.userFromId = challenge.userFromId;
+  match.userFrom   = challenge.userFrom;
+  match.userToId   = challenge.userToId;
+  match.userTo     = challenge.userTo;
+  match.result     = false;
+  console.log('Removing challenge->', challenge.userFromId+"-"+challenge.userToId);
+  challengesRef.child(challenge.userFromId+"-"+challenge.userToId).remove(function(error) {
+    if (error) {
+      console.log('Remove challenge fail');
+    }
+  });
+  matchesRef.push(match, function(error) {
+    if (error) {
+      console.log("Data could not be saved." + error);
+      bot.sendMessage(chatId, "There was an error accepting the challenge.");
+    } else {
+      console.log("Data saved successfully.");
+      bot.sendMessage(chatId, "Challenge accepted! Report your scores by typing /report [your score]:[their score].");
+    }
+  });
+};
+
 //Register user to firebase
 bot.onText(/\/register/, function(msg, match) {
   console.log('MSG->',msg,'MATCH->',match);
@@ -107,43 +132,63 @@ bot.onText(/\/accept/, function(msg) {
   challenge = {},
   match = {};
   console.log('challenger->',challenger);
-  challengesRef.orderByChild('userFrom')
-               .startAt(challenger.toLowerCase())
-               .endAt(challenger.toLowerCase())
-               .orderByChild('userTo')
-               .startAt(challenged.toLowerCase())
-               .endAt(challenged.toLowerCase())
-               .once("value", function(snapshot) {
-                 if (snapshot.val() !== null) {
-                   console.log('snapVal->',snapshot.child(Object.keys(snapshot.val())[0]).val());
-                 } else {
-                   console.log('Challenger not found');
-                 }
-    if (found) {
-      var matchesRef = fireRef.child("matches");
-      console.log('Challenge->',challenge);
-      match.userFromId = challenge.userFromId;
-      match.userFrom   = challenge.userFrom;
-      match.userToId   = challenge.userToId;
-      match.userTo     = challenge.userTo;
-      match.result     = false;
-      console.log('Removing challenge->', challenge.userFromId+"-"+challenge.userToId);
-      challengesRef.child(challenge.userFromId+"-"+challenge.userToId).remove(function(error) {
-        if (error) {
-          console.log('Remove challenge fail');
-        }
-      });
-      matchesRef.push(match, function(error) {
-        if (error) {
-          console.log("Data could not be saved." + error);
-          bot.sendMessage(chatId, "There was an error accepting the challenge.");
-        } else {
-          console.log("Data saved successfully.");
-          bot.sendMessage(chatId, "Challenge accepted! Report your scores by typing /report [your score]:[their score].");
-        }
-      });
+  challengesRef
+  .orderByChild('userFrom')
+  .startAt(challenger.toLowerCase())
+  .endAt(challenger.toLowerCase())
+  .once("value", function(snapshot) {
+    if (snapshot.val() !== null) {
+      challenge = snapshot.child(Object.keys(snapshot.val())[0]).val();
+      //check if I got that challenge with that challenger.
+      if (challenge.userTo === challenged) {
+        console.log('snapVal->',snapshot.child(Object.keys(snapshot.val())[0]).val());
+        //Creates the match
+        saveMatch(chatId, challenge);
+      }
     } else {
-      bot.sendMessage(chatId, "You don't have any challenge to accept.");
+      console.log('Challenger not found');
+      bot.sendMessage(chatId, "You don't have any challenge from @"+challenger);
+    }
+  });
+});
+
+//decline a challenge
+bot.onText(/\/decline/, function(msg) {
+  console.log('MSG decline->',msg);
+  var chatId = msg.chat.id,
+  challenged = msg.from.id,
+  challenger = msg.text.split("/accept @")[1],
+  challengesRef = fireRef.child("challenges"),
+  found = false,
+  challenge = {},
+  match = {};
+  console.log('challenger->',challenger);
+  challengesRef
+  .orderByChild('userFrom')
+  .startAt(challenger.toLowerCase())
+  .endAt(challenger.toLowerCase())
+  .once("value", function(snapshot) {
+    if (snapshot.val() !== null) {
+      challenge = snapshot.child(Object.keys(snapshot.val())[0]).val();
+      //check if I got that challenge with that challenger.
+      if (challenge.userTo === challenged) {
+        console.log('snapVal->',snapshot.child(Object.keys(snapshot.val())[0]).val());
+        //Creates the match
+        challengesRef.child(Object.keys(snapshot.val())[0]).remove(function(error) {
+          if (error) {
+            console.log('Remove challenge fail');
+          } else {
+            bot.sendMessage(chatId, "Your challenge with @"+challenger+" has been decline.");
+            bot.sendMessage(challenge.userFromId, "Your challenge to @"+challenged+" has been decline.");
+          }
+        });
+      } else {
+        console.log('Challenged to not found');
+        bot.sendMessage(chatId, "You don't have any challenge from @"+challenger);
+      }
+    } else {
+      console.log('Challenger not found');
+      bot.sendMessage(chatId, "You don't have any challenge from @"+challenger);
     }
   });
 });
