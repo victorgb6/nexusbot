@@ -101,7 +101,7 @@ bot.onText(/\/accept/, function(msg) {
   console.log('MSG accept->',msg);
   var chatId = msg.chat.id,
   userFromId = msg.from.id,
-  challenger = msg.text.split("/challenge @")[1],
+  challenger = msg.text.split("/accept @")[1],
   challengesRef = fireRef.child("challenges"),
   found = false,
   challenge = {},
