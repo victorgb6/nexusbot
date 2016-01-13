@@ -24,7 +24,7 @@ var saveChallenge = function(userFrom, userFromId, userTo, userToId) {
                    accepted: false
                  };
   var challengesRef = fireRef.child("challenges/"+userFromId+"-"+userToId);
-  challengesRef.set(challenge, function(error) {
+  challengesRef.update(challenge, function(error) {
     if (error) {
       console.log("Data could not be saved." + error);
       bot.sendMessage(chatId, "Challenge cannot be saved");
@@ -39,9 +39,9 @@ var saveChallenge = function(userFrom, userFromId, userTo, userToId) {
 //Register user to firebase
 bot.onText(/\/register/, function(msg, match) {
   console.log('MSG->',msg,'MATCH->',match);
-  var chatId = msg.chat.id;
-  var usersRef = fireRef.child("users/"+msg.from.id);
-  var user = {};
+  var chatId = msg.chat.id,
+  usersRef = fireRef.child("users/"+msg.from.id),
+  user = {};
   if ( msg.from.username ) {
     user = {first_name: msg.from.first_name,
             last_name: msg.from.last_name || "",
@@ -65,12 +65,12 @@ bot.onText(/\/register/, function(msg, match) {
 //challenge another user
 bot.onText(/\/challenge/, function(msg, match) {
   console.log('MSG->',msg,'MATCH->',match);
-  var chatId = msg.chat.id;
-  var userFromId = msg.from.id;
-  var userFrom = msg.from.username;
-  var userToId = null;
-  var userTo = msg.text.split("/challenge @")[1];
-  var usersRef = fireRef.child("users");
+  var chatId = msg.chat.id,
+  userFromId = msg.from.id,
+  userFrom = msg.from.username,
+  userToId = null,
+  userTo = msg.text.split("/challenge @")[1],
+  usersRef = fireRef.child("users");
 
   usersRef.child(userFromId).once("value", function(snapshot) {
     if (snapshot.val() !== null) {
@@ -81,29 +81,14 @@ bot.onText(/\/challenge/, function(msg, match) {
               .startAt(userTo.toLowerCase())
               .endAt(userTo.toLowerCase())
               .once("value", function(snapshot) {
-                  console.log('snapVal->',snapshot.val(),'snapKEYKEY->',Object.keys(snapshot.val())[0]);
-                  if (snapshot.val() !== null) {
-                    saveChallenge(userFrom, userFromId, userTo, Object.keys(snapshot.val())[0]);
-                    console.log('Saving Challenge');
-                  } else {
-                    console.log("Challenged user doesn't exists.");
-                    bot.sendMessage(chatId, "Challenged user @"+userTo+" is not registered yet.");
-                  }
-        // snapshot.forEach(function(childSnapshot) {
-        //   var childData = childSnapshot.val();
-        //   console.log('Snap Username->', childData.username);
-        //   childData.username.toLowerCase() === userTo.toLowerCase() ? userToId = childSnapshot.key() : null;
-        // });
-        // console.log('userToId->',userToId);
-        // if (userToId) {
-        //   saveChallenge(userFrom, userFromId, userTo, userToId);
-        //   console.log('Saving Challenge');
-        // } else {
-        //   console.log("Challenged user doesn't exists.");
-        //   bot.sendMessage(chatId, "@"+userTo+" is not registered yet.");
-        // }
-      });
-
+                if (snapshot.val() !== null) {
+                  saveChallenge(userFrom, userFromId, userTo, Object.keys(snapshot.val())[0]);
+                  console.log('Saving Challenge');
+                } else {
+                  console.log("Challenged user doesn't exists.");
+                  bot.sendMessage(chatId, "Challenged user @"+userTo+" is not registered yet.");
+                }
+              });
     } else {
       console.log("User doesn't exists.");
       bot.sendMessage(chatId, "@"+userFromId+" is not registered yet.");
@@ -114,20 +99,20 @@ bot.onText(/\/challenge/, function(msg, match) {
 //accept a challenge
 bot.onText(/\/accept/, function(msg) {
   console.log('MSG accept->',msg);
-  var chatId = msg.chat.id;
-  var userFromId = msg.from.id;
-  var challengesRef = fireRef.child("challenges");
-  var found = false;
-  var challenge,
+  var chatId = msg.chat.id,
+  userFromId = msg.from.id,
+  challenger = msg.text.split("/challenge @")[1],
+  challengesRef = fireRef.child("challenges"),
+  found = false,
+  challenge = {},
   match = {};
-  challengesRef.once("value", function(snapshot) {
-    snapshot.forEach(function(childSnapshot) {
-      //Check if finish with the user id
-      if ( new RegExp(userFromId+"$").test(childSnapshot.key()) ) {
-        found = true;
-        challenge = childSnapshot.val();
-      }
-    });
+  challengesRef.orderByChild('userFrom')
+               .startAt(challenger.toLowerCase())
+               .endAt(challenger.toLowerCase())
+               .once("value", function(snapshot) {
+                 if (snapshot.val() !== null) {
+                   console.log('snapVal->',snapshot.val());
+                 }
     if (found) {
       var matchesRef = fireRef.child("matches");
       console.log('Challenge->',challenge);
