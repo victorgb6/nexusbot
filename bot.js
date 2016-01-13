@@ -198,9 +198,9 @@ bot.onText(/\/report/, function(msg) {
   console.log('MSG report->',msg);
   var chatId = msg.chat.id,
   userFromId = msg.from.id,
-  userTo = msg.text.split('/report ')[1].split('@')[1];
-  score = msg.text.split('/report ')[2];
-  sets = score.split(",");
-  matchesRef = fireRef.child("matches"),
+  userTo = msg.text.split('/report ')[1].split('@')[1],
+  score = msg.text.split('/report ')[2],
+  sets = score.split(","),
+  matchesRef = fireRef.child("matches");
   console.log('userTo->',userTo, 'score->',score);
 });
