@@ -170,9 +170,10 @@ bot.onText(/\/decline/, function(msg) {
   .once("value", function(snapshot) {
     if (snapshot.val() !== null) {
       challenge = snapshot.child(Object.keys(snapshot.val())[0]).val();
+      console.log('challenge->',challenge);
       //check if I got that challenge with that challenger.
       if (challenge.userTo === challenged) {
-        console.log('snapVal->',snapshot.child(Object.keys(snapshot.val())[0]).val());
+
         //Creates the match
         challengesRef.child(Object.keys(snapshot.val())[0]).remove(function(error) {
           if (error) {
