@@ -106,12 +106,15 @@ bot.onText(/\/accept/, function(msg) {
   found = false,
   challenge = {},
   match = {};
+  console.log('challenger->',challenger);
   challengesRef.orderByChild('userFrom')
                .startAt(challenger.toLowerCase())
                .endAt(challenger.toLowerCase())
                .once("value", function(snapshot) {
                  if (snapshot.val() !== null) {
                    console.log('snapVal->',snapshot.val());
+                 } else {
+                   console.log('Challenger not found');
                  }
     if (found) {
       var matchesRef = fireRef.child("matches");
