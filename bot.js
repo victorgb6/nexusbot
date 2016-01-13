@@ -156,7 +156,7 @@ bot.onText(/\/accept/, function(msg) {
 bot.onText(/\/decline/, function(msg) {
   console.log('MSG decline->',msg);
   var chatId = msg.chat.id,
-  challenged = msg.from.id,
+  challengedId = msg.from.id,
   challenger = msg.text.split("/decline @")[1],
   challengesRef = fireRef.child("challenges"),
   found = false,
@@ -172,15 +172,14 @@ bot.onText(/\/decline/, function(msg) {
       challenge = snapshot.child(Object.keys(snapshot.val())[0]).val();
       console.log('challenge->',challenge);
       //check if I got that challenge with that challenger.
-      if (challenge.userTo === challenged) {
-
+      if (challenge.userToId === challengedId) {
         //Creates the match
         challengesRef.child(Object.keys(snapshot.val())[0]).remove(function(error) {
           if (error) {
             console.log('Remove challenge fail');
           } else {
             bot.sendMessage(chatId, "Your challenge with @"+challenger+" has been decline.");
-            bot.sendMessage(challenge.userFromId, "Your challenge to @"+challenged+" has been decline.");
+            bot.sendMessage(challenge.userFromId, "Your challenge to @"+challenge.userTo+" has been decline.");
           }
         });
       } else {
