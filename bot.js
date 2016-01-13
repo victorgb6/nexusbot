@@ -157,7 +157,7 @@ bot.onText(/\/decline/, function(msg) {
   console.log('MSG decline->',msg);
   var chatId = msg.chat.id,
   challenged = msg.from.id,
-  challenger = msg.text.split("/accept @")[1],
+  challenger = msg.text.split("/decline @")[1],
   challengesRef = fireRef.child("challenges"),
   found = false,
   challenge = {},
