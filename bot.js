@@ -112,7 +112,7 @@ bot.onText(/\/accept/, function(msg) {
                .endAt(challenger.toLowerCase())
                .once("value", function(snapshot) {
                  if (snapshot.val() !== null) {
-                   console.log('snapVal->',snapshot.val());
+                   console.log('snapVal->',snapshot.val().child(Object.keys(snapshot.val())[0]));
                  } else {
                    console.log('Challenger not found');
                  }
