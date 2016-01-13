@@ -100,7 +100,7 @@ bot.onText(/\/challenge/, function(msg, match) {
 bot.onText(/\/accept/, function(msg) {
   console.log('MSG accept->',msg);
   var chatId = msg.chat.id,
-  userFromId = msg.from.id,
+  challenged = msg.from.id,
   challenger = msg.text.split("/accept @")[1],
   challengesRef = fireRef.child("challenges"),
   found = false,
@@ -110,6 +110,9 @@ bot.onText(/\/accept/, function(msg) {
   challengesRef.orderByChild('userFrom')
                .startAt(challenger.toLowerCase())
                .endAt(challenger.toLowerCase())
+               .orderByChild('userTo')
+               .startAt(challenged.toLowerCase())
+               .endAt(challenged.toLowerCase())
                .once("value", function(snapshot) {
                  if (snapshot.val() !== null) {
                    console.log('snapVal->',snapshot.child(Object.keys(snapshot.val())[0]).val());
