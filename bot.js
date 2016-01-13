@@ -172,7 +172,6 @@ bot.onText(/\/decline/, function(msg) {
       challenge = snapshot.child(Object.keys(snapshot.val())[0]).val();
       console.log('challenge->',challenge);
       //check if I got that challenge with that challenger.
-      console.log('1->',challenge.userToId, '2->',challengedId);
       if (challenge.userToId == challengedId) {
         //Creates the match
         challengesRef.child(Object.keys(snapshot.val())[0]).remove(function(error) {
@@ -197,10 +196,11 @@ bot.onText(/\/decline/, function(msg) {
 //Report a match
 bot.onText(/\/report/, function(msg) {
   console.log('MSG report->',msg);
-  var chatId = msg.chat.id;
-  var userFromId = msg.from.id;
-  var score = msg.text.split(':');
-  var userFromScore = score[0];
-  var userToScore = score[1];
-  var matchesRef = fireRef.child("matches");
+  var chatId = msg.chat.id,
+  userFromId = msg.from.id,
+  userTo = msg.text.split('/report ')[1].split('@')[1];
+  score = msg.text.split('/report ')[2];
+  sets = score.split(",");
+  matchesRef = fireRef.child("matches"),
+  console.log('userTo->',userTo, 'score->',score);
 });
