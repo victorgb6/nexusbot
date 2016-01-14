@@ -30,7 +30,7 @@ var saveChallenge = function(userFrom, userFromId, userTo, userToId) {
       bot.sendMessage(chatId, "Challenge cannot be saved");
     } else {
       console.log("Data saved successfully.");
-      bot.sendMessage(userToId, "@"+userTo+" you have been challenge by @"+userFrom+" type /accept or /decline to get started.");
+      bot.sendMessage(userToId, "@"+userTo+" you have been challenge by @"+userFrom+" type /accept [@user] or /decline [@user] to get started.");
       bot.sendMessage(userFromId, "Your challenge has been sent to @"+userTo);
     }
   });
