@@ -38,7 +38,7 @@ var saveChallenge = function(userFrom, userFromId, userTo, userToId) {
 
 var saveMatch = function(chatId, challenge) {
   var matchesRef = fireRef.child("matches"),
-  challengesRef = fireRef.child("challenges")
+  challengesRef = fireRef.child("challenges"),
   match = {};
   console.log('Challenge->',challenge);
   match.userFromId = challenge.userFromId;
