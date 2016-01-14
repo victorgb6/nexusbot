@@ -128,23 +128,27 @@ bot.onText(/\/challenge/, function(msg, match) {
 bot.onText(/\/accept/, function(msg) {
   console.log('MSG accept->',msg);
   var chatId = msg.chat.id,
-  challenged = msg.from.id,
+  challengedId = msg.from.id,
   challenger = msg.text.split("/accept @")[1],
+  challengerId = '',
   challengesRef = fireRef.child("challenges"),
-  found = false,
-  challenge = {},
-  match = {};
+  challenge = {};
   console.log('challenger->',challenger);
+  fireRef.child("users").orderByChild('username')
+          .startAt(challenger.toLowerCase())
+          .endAt(challenger.toLowerCase())
+          .once("value", function(snapshot) {
+            challengerId = snapshot.key();
+            console.log('challengerId->', challengerId);
+          });
   challengesRef
-  .orderByChild('userFrom')
-  .startAt(challenger.toLowerCase())
-  .endAt(challenger.toLowerCase())
+  .child(challengerId+'-'+challengedId)
   .once("value", function(snapshot) {
     if (snapshot.val() !== null) {
       challenge = snapshot.child(Object.keys(snapshot.val())[0]).val();
       console.log('Accept Challenge->', challenge);
       //check if I got that challenge with that challenger.
-      if (challenge.userToId == challenged) {
+      if (challenge.userToId == challengedId) {
         console.log('snapVal->', challenge);
         //Creates the match
         saveMatch(chatId, challenge);
