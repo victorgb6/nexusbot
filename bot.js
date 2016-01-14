@@ -59,7 +59,7 @@ var saveMatch = function(chatId, challenge) {
     } else {
       console.log("Data saved successfully.");
       bot.sendMessage(chatId, "Challenge accepted! Report your scores by typing /report [your score]:[their score].");
-      bot.sendMessage(userFromId, "Your challenged to @"+userTo+" has been accepted, let's play! Report your scores by typing /report [your score]:[their score].");
+      bot.sendMessage(challenge.userFromId, "Your challenged to @"+userTo+" has been accepted, let's play! Report your scores by typing /report [your score]:[their score].");
     }
   });
 };
