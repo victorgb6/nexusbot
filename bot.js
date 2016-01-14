@@ -140,25 +140,25 @@ bot.onText(/\/accept/, function(msg) {
           .once("value", function(snapshot) {
             challengerId = Object.keys(snapshot.val())[0];
             console.log('challengerId->', challengerId);
+            console.log('Ref->',challengerId+'-'+challengedId);
+            challengesRef
+            .child(challengerId+'-'+challengedId)
+            .once("value", function(snapshot) {
+              if (snapshot.val() !== null) {
+                challenge = snapshot.child(Object.keys(snapshot.val())[0]).val();
+                console.log('Accept Challenge->', challenge);
+                //check if I got that challenge with that challenger.
+                if (challenge.userToId == challengedId) {
+                  console.log('snapVal->', challenge);
+                  //Creates the match
+                  saveMatch(chatId, challenge);
+                }
+              } else {
+                console.log('Challenger not found');
+                bot.sendMessage(chatId, "You don't have any challenge from @"+challenger);
+              }
+            });
           });
-  console.log('Ref->',challengerId+'-'+challengedId);
-  challengesRef
-  .child(challengerId+'-'+challengedId)
-  .once("value", function(snapshot) {
-    if (snapshot.val() !== null) {
-      challenge = snapshot.child(Object.keys(snapshot.val())[0]).val();
-      console.log('Accept Challenge->', challenge);
-      //check if I got that challenge with that challenger.
-      if (challenge.userToId == challengedId) {
-        console.log('snapVal->', challenge);
-        //Creates the match
-        saveMatch(chatId, challenge);
-      }
-    } else {
-      console.log('Challenger not found');
-      bot.sendMessage(chatId, "You don't have any challenge from @"+challenger);
-    }
-  });
 });
 
 //decline a challenge
