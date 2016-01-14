@@ -141,6 +141,7 @@ bot.onText(/\/accept/, function(msg) {
             challengerId = Object.keys(snapshot.val())[0];
             console.log('challengerId->', challengerId);
           });
+  console.log('Ref->',challengerId+'-'+challengedId);
   challengesRef
   .child(challengerId+'-'+challengedId)
   .once("value", function(snapshot) {
