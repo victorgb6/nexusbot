@@ -141,7 +141,7 @@ bot.onText(/\/accept/, function(msg) {
       challenge = snapshot.child(Object.keys(snapshot.val())[0]).val();
       console.log('Accept Challenge->', challenge);
       //check if I got that challenge with that challenger.
-      if (challenge.userTo === challenged) {
+      if (challenge.userToId === challenged) {
         console.log('snapVal->',snapshot.child(Object.keys(snapshot.val())[0]).val());
         //Creates the match
         saveMatch(chatId, challenge);
