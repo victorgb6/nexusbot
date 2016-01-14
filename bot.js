@@ -139,6 +139,7 @@ bot.onText(/\/accept/, function(msg) {
   .once("value", function(snapshot) {
     if (snapshot.val() !== null) {
       challenge = snapshot.child(Object.keys(snapshot.val())[0]).val();
+      console.log('Accept Challenge->', challenge);
       //check if I got that challenge with that challenger.
       if (challenge.userTo === challenged) {
         console.log('snapVal->',snapshot.child(Object.keys(snapshot.val())[0]).val());
