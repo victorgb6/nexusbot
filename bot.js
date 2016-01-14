@@ -37,7 +37,8 @@ var saveChallenge = function(userFrom, userFromId, userTo, userToId) {
 };
 
 var saveMatch = function(chatId, challenge) {
-  var matchesRef = fireRef.child("matches");
+  var matchesRef = fireRef.child("matches"),
+  match = {};
   console.log('Challenge->',challenge);
   match.userFromId = challenge.userFromId;
   match.userFrom   = challenge.userFrom;
@@ -142,7 +143,7 @@ bot.onText(/\/accept/, function(msg) {
       console.log('Accept Challenge->', challenge);
       //check if I got that challenge with that challenger.
       if (challenge.userToId == challenged) {
-        console.log('snapVal->',snapshot.child(Object.keys(snapshot.val())[0]).val());
+        console.log('snapVal->', challenge);
         //Creates the match
         saveMatch(chatId, challenge);
       }
