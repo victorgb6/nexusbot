@@ -138,7 +138,7 @@ bot.onText(/\/accept/, function(msg) {
           .startAt(challenger.toLowerCase())
           .endAt(challenger.toLowerCase())
           .once("value", function(snapshot) {
-            challengerId = snapshot.key();
+            challengerId = Object.keys(snapshot.val())[0];
             console.log('challengerId->', challengerId);
           });
   challengesRef
