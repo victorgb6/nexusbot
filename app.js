@@ -215,10 +215,3 @@ bot.onText(/\/report/, function(msg) {
 
   console.log('userTo->',userTo, 'score->',score);
 });
-
-//Inline query
-bot.on('inline_query', function (msg) {
-  var chatId = msg.chat.id;
-  // photo can be: a file path, a stream or a Telegram file_id
-  console.log('MSG_>',msg);
-});

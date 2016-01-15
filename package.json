@@ -31,5 +31,5 @@
   "devDependencies": {},
   "bundleDependencies": [],
   "private": true,
-  "main": "bot.js"
+  "main": "app.js"
 }
