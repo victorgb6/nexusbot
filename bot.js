@@ -217,7 +217,7 @@ bot.onText(/\/report/, function(msg) {
 });
 
 //Inline query
-bot.on('message', function (msg) {
+bot.on('inline_query', function (msg) {
   var chatId = msg.chat.id;
   // photo can be: a file path, a stream or a Telegram file_id
   console.log('MSG_>',msg);
