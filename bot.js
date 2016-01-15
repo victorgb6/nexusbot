@@ -20,8 +20,7 @@ var saveChallenge = function(userFrom, userFromId, userTo, userToId) {
   var challenge = {userFrom: userFrom,
                    userFromId: userFromId,
                    userTo: userTo,
-                   userToId: userToId,
-                   accepted: false
+                   userToId: userToId
                  };
   var challengesRef = fireRef.child("challenges/"+userFromId+"-"+userToId);
   challengesRef.update(challenge, function(error) {
@@ -215,4 +214,11 @@ bot.onText(/\/report/, function(msg) {
   matchesRef = fireRef.child("matches");
 
   console.log('userTo->',userTo, 'score->',score);
+});
+
+//Inline query
+bot.on('message', function (msg) {
+  var chatId = msg.chat.id;
+  // photo can be: a file path, a stream or a Telegram file_id
+  console.log('MSG_>',msg);
 });
