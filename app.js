@@ -74,7 +74,8 @@ bot.onText(/\/register/, function(msg, match) {
             last_name: msg.from.last_name || "",
             username: msg.from.username.toLowerCase()
           };
-    pong.log();
+    console.log('pong->', pong);
+    console.log('t->', bot);
     pong.saveUser(user).then(function(){
       bot.sendMessage(chatId, "You're all set. Challenge someone by typing /challenge [name]");
     }, function() {
