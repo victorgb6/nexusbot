@@ -26,6 +26,7 @@
     "express": "~3.4.4",
     "firebase": "^2.3.2",
     "node-telegram-bot-api": "^0.17.0",
+    "q": "^1.4.1",
     "request": "^2.67.0"
   },
   "devDependencies": {},
