@@ -67,14 +67,11 @@ var saveMatch = function(chatId, challenge) {
 bot.onText(/\/register/, function(msg, match) {
   console.log('MSG->',msg,'MATCH->',match);
   var chatId = msg.chat.id;
-console.log('0000000');
   if ( msg.from.username ) {
-    console.log('11111111');
     user = {first_name: msg.from.first_name,
             last_name: msg.from.last_name || "",
             username: msg.from.username.toLowerCase()
           };
-    console.log('db->',db);
     db.saveUser(user).then(function(){
       bot.sendMessage(chatId, "You're all set. Challenge someone by typing /challenge [name]");
     }, function() {
