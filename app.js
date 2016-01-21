@@ -1,7 +1,7 @@
 'use strict';
 var TelegramBot = require('node-telegram-bot-api');
 var Firebase    = require("firebase");
-var db          = require("/lib/db.js");
+var db          = require("./lib/db.js");
 
 var token = '174209263:AAFz6nGIWjyMKjTWGe4ewy59qGr189DmtKw';
 // See https://developers.openshift.com/en/node-js-environment-variables.html
