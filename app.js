@@ -74,7 +74,7 @@ console.log('0000000');
             last_name: msg.from.last_name || "",
             username: msg.from.username.toLowerCase()
           };
-    console.log('db->',db.saveUser);
+    console.log('db->',db);
     db.saveUser(user).then(function(){
       bot.sendMessage(chatId, "You're all set. Challenge someone by typing /challenge [name]");
     }, function() {
