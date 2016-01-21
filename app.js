@@ -74,6 +74,7 @@ bot.onText(/\/register/, function(msg, match) {
             last_name: msg.from.last_name || "",
             username: msg.from.username.toLowerCase()
           };
+    console.log('pep');
     console.log('pong->', pong);
     console.log('t->', bot);
     pong.saveUser(user).then(function(){
