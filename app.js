@@ -11,6 +11,8 @@ var domain = process.env.OPENSHIFT_APP_DNS;
 
 var fireRef = new Firebase("https://nexus-bot.firebaseio.com/");
 
+var pong = new db();
+
 var bot = new TelegramBot(token, {webHook: {port: port, host: host}});
 // OpenShift enroutes :443 request to OPENSHIFT_NODEJS_PORT
 bot.setWebHook(domain+':443/bot'+token);
@@ -72,8 +74,8 @@ bot.onText(/\/register/, function(msg, match) {
             last_name: msg.from.last_name || "",
             username: msg.from.username.toLowerCase()
           };
-    db.log();
-    db.saveUser(user).then(function(){
+    pong.log();
+    pong.saveUser(user).then(function(){
       bot.sendMessage(chatId, "You're all set. Challenge someone by typing /challenge [name]");
     }, function() {
       bot.sendMessage(chatId, "There was an error saving your user");
