@@ -73,7 +73,8 @@ bot.onText(/\/register/, function(msg, match) {
             last_name: msg.from.last_name || "",
             username: msg.from.username.toLowerCase()
           };
-    db.saveUse(user).then(function(){
+    console.log('db->',db.saveUser);
+    db.saveUser(user).then(function(){
       bot.sendMessage(chatId, "You're all set. Challenge someone by typing /challenge [name]");
     }, function() {
       bot.sendMessage(chatId, "There was an error saving your user");
