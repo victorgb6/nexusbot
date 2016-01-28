@@ -2,6 +2,7 @@
 var TelegramBot = require('node-telegram-bot-api');
 var Firebase    = require("firebase");
 var db          = require("./lib/db.js");
+var Player      = require("./models/Player.js");
 
 var token = '174209263:AAFz6nGIWjyMKjTWGe4ewy59qGr189DmtKw';
 // See https://developers.openshift.com/en/node-js-environment-variables.html
@@ -89,30 +90,19 @@ bot.onText(/\/challenge/, function(msg, match) {
   userFromId = msg.from.id,
   userFrom = msg.from.username,
   userToId = null,
-  userTo = msg.text.split("/challenge @")[1],
-  usersRef = fireRef.child("users");
+  userTo = msg.text.split("/challenge @")[1];
 
-  usersRef.child(userFromId).once("value", function(snapshot) {
-    if (snapshot.val() !== null) {
-    //userFrom is registered
-    //check if challenged user is registered
-    console.log('userTo->',userTo);
-      usersRef.orderByChild('username')
-              .startAt(userTo.toLowerCase())
-              .endAt(userTo.toLowerCase())
-              .once("value", function(snapshot) {
-                if (snapshot.val() !== null) {
-                  saveChallenge(userFrom, userFromId, userTo, Object.keys(snapshot.val())[0]);
-                  console.log('Saving Challenge');
-                } else {
-                  console.log("Challenged user doesn't exists.");
-                  bot.sendMessage(chatId, "Challenged user @"+userTo+" is not registered yet.");
-                }
-              });
-    } else {
-      console.log("User doesn't exists.");
-      bot.sendMessage(chatId, "@"+userFromId+" is not registered yet.");
-    }
+  db.findUserById(userFromId).then(function(){
+    db.findUserByName(userTo.toLowerCase()).then(function(user){
+      saveChallenge(userFrom, userFromId, userTo, user.key());
+      console.log('Saving Challenge');
+    }, function(){
+      console.log("Challenged user doesn't exists.");
+      bot.sendMessage(chatId, "Challenged user @"+userTo+" is not registered yet.");
+    });
+  }, function() {
+    console.log("User doesn't exists.");
+    bot.sendMessage(chatId, "@"+userFromId+" is not registered yet.");
   });
 });
 
