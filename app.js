@@ -88,7 +88,7 @@ bot.onText(/\/challenge/, function(msg, match) {
   db.findUserById(userFromId).then(function(){
     db.findUserByName(userTo.toLowerCase()).then(function(user){
       saveChallenge(userFrom, userFromId, userTo, user.key());
-      console.log('Saving Challenge->', user);
+      console.log('Saving Challenge');
     }, function(){
       console.log("Challenged user doesn't exists.");
       bot.sendMessage(chatId, "Challenged user @"+userTo+" is not registered yet.");
@@ -107,6 +107,7 @@ bot.onText(/\/accept/, function(msg) {
   challengerId = '',
   challengesRef = fireRef.child("challenges"),
   challenge = {};
+
   db.getChallenge(challengedId).then(function(challenge){
     console.log('Accept challenge:', challenge);
   }, function(){
