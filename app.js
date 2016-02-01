@@ -34,11 +34,10 @@ var saveMatch = function(chatId, challenge) {
   challengesRef = fireRef.child("challenges"),
   match = {};
   console.log('Challenge->',challenge);
-  match.userFromId = challenge.userFromId;
-  match.userFrom   = challenge.userFrom;
-  match.userToId   = challenge.userToId;
-  match.userTo     = challenge.userTo;
-  match.result     = false;
+  match.host    = challenge.userFromId;
+  match.visitor = challenge.userToId;
+  match.result  = false;
+  match.winner  = false;
   console.log('Removing challenge->', challenge.userFromId+"-"+challenge.userToId);
   challengesRef.child(challenge.userFromId+"-"+challenge.userToId).remove(function(error) {
     if (error) {
@@ -64,7 +63,8 @@ bot.onText(/\/register/, function(msg, match) {
   if ( msg.from.username ) {
     var user = {first_name: msg.from.first_name,
             last_name: msg.from.last_name || "",
-            username: msg.from.username.toLowerCase()
+            username: msg.from.username.toLowerCase(),
+            challenge: false
           };
     db.saveUser(user, chatId).then(function(){
       bot.sendMessage(chatId, "You're all set. Challenge someone by typing /challenge [name]");
@@ -88,7 +88,7 @@ bot.onText(/\/challenge/, function(msg, match) {
   db.findUserById(userFromId).then(function(){
     db.findUserByName(userTo.toLowerCase()).then(function(user){
       saveChallenge(userFrom, userFromId, userTo, user.key());
-      console.log('Saving Challenge');
+      console.log('Saving Challenge->', user);
     }, function(){
       console.log("Challenged user doesn't exists.");
       bot.sendMessage(chatId, "Challenged user @"+userTo+" is not registered yet.");
@@ -109,31 +109,36 @@ bot.onText(/\/accept/, function(msg) {
   challengesRef = fireRef.child("challenges"),
   challenge = {};
   console.log('challenger->',challenger);
-  fireRef.child("users").orderByChild('username')
-          .startAt(challenger.toLowerCase())
-          .endAt(challenger.toLowerCase())
-          .once("value", function(snapshot) {
-            challengerId = Object.keys(snapshot.val())[0];
-            console.log('challengerId->', challengerId);
-            console.log('Ref->',challengerId+'-'+challengedId);
-            challengesRef
-            .child(challengerId+'-'+challengedId)
-            .once("value", function(snapshot) {
-              if (snapshot.val() !== null) {
-                challenge = snapshot.val();
-                console.log('Accept Challenge->', challenge);
-                //check if I got that challenge with that challenger.
-                if (challenge.userToId == challengedId) {
-                  console.log('snapVal->', challenge);
-                  //Creates the match
-                  saveMatch(chatId, challenge);
-                }
-              } else {
-                console.log('Challenger not found');
-                bot.sendMessage(chatId, "You don't have any challenge from @"+challenger);
-              }
-            });
-          });
+  db.getChallenge(challengedId).then(function(challenge){
+    console.log('Accept challenge:' challenge);
+  }, function(){
+    console.log('Accept fail');
+  });
+  // fireRef.child("users").orderByChild('username')
+  //         .startAt(challenger.toLowerCase())
+  //         .endAt(challenger.toLowerCase())
+  //         .once("value", function(snapshot) {
+  //           challengerId = Object.keys(snapshot.val())[0];
+  //           console.log('challengerId->', challengerId);
+  //           console.log('Ref->',challengerId+'-'+challengedId);
+  //           challengesRef
+  //           .child(challengerId+'-'+challengedId)
+  //           .once("value", function(snapshot) {
+  //             if (snapshot.val() !== null) {
+  //               challenge = snapshot.val();
+  //               console.log('Accept Challenge->', challenge);
+  //               //check if I got that challenge with that challenger.
+  //               if (challenge.userToId == challengedId) {
+  //                 console.log('snapVal->', challenge);
+  //                 //Creates the match
+  //                 saveMatch(chatId, challenge);
+  //               }
+  //             } else {
+  //               console.log('Challenger not found');
+  //               bot.sendMessage(chatId, "You don't have any challenge from @"+challenger);
+  //             }
+  //           });
+  //         });
 });
 
 //decline a challenge
