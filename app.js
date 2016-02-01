@@ -110,7 +110,7 @@ bot.onText(/\/accept/, function(msg) {
   challenge = {};
   console.log('challenger->',challenger);
   db.getChallenge(challengedId).then(function(challenge){
-    console.log('Accept challenge:' challenge);
+    console.log('Accept challenge:', challenge);
   }, function(){
     console.log('Accept fail');
   });
