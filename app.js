@@ -19,20 +19,13 @@ console.log('webhook set!');
 
 var saveChallenge = function(userFrom, userFromId, userTo, userToId) {
   var challenge = {userFrom: userFrom,
-                   userFromId: userFromId,
-                   userTo: userTo,
-                   userToId: userToId
+                   userFromId: userFromId
                  };
-  var challengesRef = fireRef.child("challenges/"+userFromId+"-"+userToId);
-  challengesRef.update(challenge, function(error) {
-    if (error) {
-      console.log("Data could not be saved." + error);
-      bot.sendMessage(chatId, "Challenge cannot be saved");
-    } else {
-      console.log("Data saved successfully.");
-      bot.sendMessage(userToId, "@"+userTo+" you have been challenge by @"+userFrom+" type /accept [@user] or /decline [@user] to get started.");
-      bot.sendMessage(userFromId, "Your challenge has been sent to @"+userTo);
-    }
+  db.saveChallenge(userToId, challenge).then(function(){
+    bot.sendMessage(userToId, "@"+userTo+" you have been challenge by @"+userFrom+" type /accept or /decline to get started.");
+    bot.sendMessage(userFromId, "Your challenge has been sent to @"+userTo);
+  }, function() {
+    bot.sendMessage(userFromId, "Challenge cannot be saved");
   });
 };
 
