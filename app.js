@@ -97,7 +97,7 @@ bot.onText(/\/challenge/, function(msg, match) {
 bot.onText(/\/accept/, function(msg) {
   console.log('MSG accept->',msg);
   var chatId = msg.chat.id;
-  db.hasPendingMatch(chatId).then(function(hasPendingMatch){
+  db.getPendingMatch(chatId).then(function(hasPendingMatch){
     if (!hasPendingMatch) {
       db.getChallenge(chatId).then(function(challenge){
         console.log('Accept challenge:', challenge);
