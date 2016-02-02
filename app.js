@@ -154,7 +154,12 @@ bot.onText(/\/lost/, function(msg) {
     if (pendingMatchKey) {
       db.findMatchById(pendingMatchKey).then(function(match) {
         console.log('Updating match->', pendingMatchKey, match, sets, loserId);
-        db.updateMatchResult(pendingMatchKey, match, sets, loserId);
+        db.updateMatchResult(pendingMatchKey, match, sets, loserId).then( function(winnerId){
+          bot.sendMessage(chatId, "Your result was saved correctly.");
+          bot.sendMessage(winnerId, "Congratz! Your win against @"+msg.from.username+" was saved correctly.");
+        }, function() {
+          bot.sendMessage(chatId, "There was an error saving your result.");
+        });
       }, function() {
         console.log('Error checking if the player has match without result');
         bot.sendMessage(chatId, "You don't have any match to report.");
@@ -165,6 +170,7 @@ bot.onText(/\/lost/, function(msg) {
     }
   }, function() {
     console.log('Error checking if hasPendingMatch');
+    bot.sendMessage(chatId, "You don't have any pending match to report.");
   });
 
 });
