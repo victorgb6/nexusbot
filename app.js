@@ -157,6 +157,7 @@ bot.onText(/\/lost/, function(msg) {
   //TODO: See if this is not double check.
   db.hasPendingMatch(chatId).then(function(hasPendingMatch){
     if (hasPendingMatch) {
+      //findMatchById
       db.findMatchWithoutResultByPlayerId(chatId).then(function(result) {
         console.log('Updating match->',result.matchKey, result.match, sets, loserId);
         db.updateMatchResult(result.matchKey, result.match, sets, loserId);
