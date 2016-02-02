@@ -106,8 +106,8 @@ bot.onText(/\/accept/, function(msg) {
         match.visitor = chatId;
         match.result  = false;
         match.winner  = false;
-        db.saveMatch(match).then(function(){
-          db.removeChallenge(chatId);
+        db.saveMatch(match).then(function(matchKey){
+          db.removeChallenge(chatId, matchKey);
           bot.sendMessage(chatId, "Challenge accepted. Let's Play.");
           bot.sendMessage(challenge.userFromId, "Your challenge to @"+msg.chat.username+" has been accepted. Get ready!");
         }, function() {
