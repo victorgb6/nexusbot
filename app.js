@@ -162,10 +162,11 @@ bot.onText(/\/lost/, function(msg) {
         db.updateMatchResult(result.matchKey, result.match, sets, loserId);
       }, function() {
         console.log('Error checking if the player has match without result');
+        bot.sendMessage(chatId, "You don't have any match to report.");
       });
     } else {
       console.log('Player does not have a match without result.');
-      bot.sendMessage(chatId, "You don't have any match to report.");
+      bot.sendMessage(chatId, "You don't have any pending match to report.");
     }
   }, function() {
     console.log('Error checking if hasPendingMatch');
