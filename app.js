@@ -120,41 +120,19 @@ bot.onText(/\/accept/, function(msg) {
 //decline a challenge
 bot.onText(/\/decline/, function(msg) {
   console.log('MSG decline->',msg);
-  var chatId = msg.chat.id,
-  challengedId = msg.from.id,
-  challenger = msg.text.split("/decline @")[1],
-  challengesRef = fireRef.child("challenges"),
-  found = false,
-  challenge = {},
-  match = {};
-  console.log('challenger->',challenger);
-  challengesRef
-  .orderByChild('userFrom')
-  .startAt(challenger.toLowerCase())
-  .endAt(challenger.toLowerCase())
-  .once("value", function(snapshot) {
-    if (snapshot.val() !== null) {
-      challenge = snapshot.child(Object.keys(snapshot.val())[0]).val();
-      console.log('challenge->',challenge);
-      //check if I got that challenge with that challenger.
-      if (challenge.userToId == challengedId) {
-        //Creates the match
-        challengesRef.child(Object.keys(snapshot.val())[0]).remove(function(error) {
-          if (error) {
-            console.log('Remove challenge fail');
-          } else {
-            bot.sendMessage(chatId, "Your challenge with @"+challenger+" has been decline.");
-            bot.sendMessage(challenge.userFromId, "Your challenge to @"+challenge.userTo+" has been decline.");
-          }
-        });
-      } else {
-        console.log('Challenged to not found');
-        bot.sendMessage(chatId, "You don't have any challenge from @"+challenger);
-      }
-    } else {
-      console.log('Challenger not found');
-      bot.sendMessage(chatId, "You don't have any challenge from @"+challenger);
-    }
+  var chatId = msg.chat.id;
+
+  db.getChallenge(chatId).then(function(challenge){
+    db.removeChallenge(chatId).then(function(){
+      bot.sendMessage(chatId, "Your challenge with @"+challenge.userFrom+" has been rejected. There is a chicken at the office?");
+      bot.sendMessage(challenge.userFromId, "Your challenge to @"+msg.chat.username+" has been rejected.");
+    }, function(){
+      console.log('Error removing declined challenge');
+      bot.sendMessage(chatId, "There was an error declining your challenge.");
+    });
+  }, function() {
+    console.log('Error declining challenge');
+    bot.sendMessage(chatId, "You don't have any challenge to decline.");
   });
 });
 
