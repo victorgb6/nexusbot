@@ -17,37 +17,6 @@ var bot = new TelegramBot(token, {webHook: {port: port, host: host}});
 bot.setWebHook(domain+':443/bot'+token);
 console.log('webhook set!');
 
-var saveChallenge = function(userFrom, userFromId, userTo, userToId) {
-  var challenge = {userFrom: userFrom,
-                   userFromId: userFromId
-                 };
-  db.saveChallenge(userToId, challenge).then(function(){
-    bot.sendMessage(userToId, "@"+userTo+" you have been challenge by @"+userFrom+" type /accept or /decline to get started.");
-    bot.sendMessage(userFromId, "Your challenge has been sent to @"+userTo);
-  }, function() {
-    bot.sendMessage(userFromId, "Challenge cannot be saved");
-  });
-};
-
-var saveMatch = function(chatId, challenge) {
-  var match = {};
-  match.host    = challenge.userFromId;
-  match.visitor = chatId;
-  match.result  = false;
-  match.winner  = false;
-
-  matchesRef.push(match, function(error) {
-    if (error) {
-      console.log("Data could not be saved." + error);
-      bot.sendMessage(chatId, "There was an error accepting the challenge.");
-    } else {
-      console.log("Data saved successfully.");
-      bot.sendMessage(chatId, "Challenge accepted! Report your scores by typing /report [your score]:[their score].");
-      bot.sendMessage(challenge.userFromId, "Your challenged to @"+challenge.userTo+" has been accepted, let's play! Report your scores by typing /report [your score]:[their score].");
-    }
-  });
-};
-
 //Register user to firebase
 bot.onText(/\/register/, function(msg, match) {
   console.log('MSG->',msg);
@@ -81,8 +50,15 @@ bot.onText(/\/challenge/, function(msg, match) {
 
   db.findUserById(userFromId).then(function(){
     db.findUserByName(userTo.toLowerCase()).then(function(user){
-      saveChallenge(userFrom, userFromId, userTo, user.key());
-      console.log('Saving Challenge');
+      var challenge = {userFrom: userFrom,
+                       userFromId: userFromId
+                     };
+      db.saveChallenge(user.key(), challenge).then(function(){
+        bot.sendMessage(user.key(), "@"+userTo+" you have been challenge by @"+userFrom+" type /accept or /decline to get started.");
+        bot.sendMessage(userFromId, "Your challenge has been sent to @"+userTo);
+      }, function() {
+        bot.sendMessage(userFromId, "Challenge cannot be saved");
+      });
     }, function(){
       console.log("Challenged user doesn't exists.");
       bot.sendMessage(chatId, "Challenged user @"+userTo+" is not registered yet.");
