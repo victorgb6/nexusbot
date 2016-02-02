@@ -154,13 +154,11 @@ bot.onText(/\/lost/, function(msg) {
   arg = msg.text.split('/lost ')[1],
   sets = arg.split(' ');
 
-  //TODO: See if this is not double check.
-  db.hasPendingMatch(chatId).then(function(hasPendingMatch){
-    if (hasPendingMatch) {
-      //findMatchById
-      db.findMatchWithoutResultByPlayerId(chatId).then(function(result) {
-        console.log('Updating match->',result.matchKey, result.match, sets, loserId);
-        db.updateMatchResult(result.matchKey, result.match, sets, loserId);
+  db.getPendingMatch(chatId).then(function(pendingMatchKey){
+    if (pendingMatchKey) {
+      db.findMatchById(pendingMatchKey).then(function(match) {
+        console.log('Updating match->', pendingMatchKey, match, sets, loserId);
+        db.updateMatchResult(pendingMatchKey, match, sets, loserId);
       }, function() {
         console.log('Error checking if the player has match without result');
         bot.sendMessage(chatId, "You don't have any match to report.");
