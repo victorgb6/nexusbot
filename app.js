@@ -158,6 +158,7 @@ bot.onText(/\/lost/, function(msg) {
   db.hasPendingMatch(chatId).then(function(hasPendingMatch){
     if (hasPendingMatch) {
       db.findMatchWithoutResultByPlayerId(chatId).then(function(matchKey, match) {
+        console.log('Updating match->',matchKey, match, sets, loserId);
         db.updateMatchResult(matchKey, match, sets, loserId);
       }, function() {
         console.log('Error checking if the player has match without result');
