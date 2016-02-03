@@ -103,7 +103,6 @@ bot.onText(/\/accept/, function(msg) {
 bot.onText(/\/decline/, function(msg) {
   console.log('MSG decline->',msg);
   var chatId = msg.chat.id;
-
   db.getChallenge(chatId).then(function(challenge){
     db.removeChallenge(chatId).then(function(){
       bot.sendMessage(chatId, "Your challenge with @"+challenge.userFrom+" has been rejected. There is a chicken at the office?");
