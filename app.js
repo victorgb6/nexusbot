@@ -3,7 +3,7 @@ var TelegramBot = require('node-telegram-bot-api');
 var Firebase    = require("firebase");
 var db          = require("./lib/db.js");
 
-var token = '174209263:AAFz6nGIWjyMKjTWGe4ewy59qGr189DmtKw';
+var token = process.env.telegram_token;
 // See https://developers.openshift.com/en/node-js-environment-variables.html
 var port = process.env.OPENSHIFT_NODEJS_PORT;
 var host = process.env.OPENSHIFT_NODEJS_IP;
@@ -115,6 +115,17 @@ bot.onText(/\/decline/, function(msg) {
   }, function() {
     console.log('Error declining challenge');
     bot.sendMessage(chatId, "You don't have any challenge to decline.");
+  });
+});
+
+//resign a match
+bot.onText(/\/resign/, function(msg) {
+  console.log('MSG resign->',msg);
+  var chatId = msg.chat.id;
+  db.findUserById(chatId).then(function(snapshot) {
+    var user = snapshot.val();
+  }, function() {
+
   });
 });
 
