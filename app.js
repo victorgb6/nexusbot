@@ -5,7 +5,8 @@ var db          = require('./lib/db');
 var register    = require('./bot/register');
 var challenge   = require('./bot/challenge');
 var accept      = require('./bot/accept');
-var decline      = require('./bot/decline');
+var decline     = require('./bot/decline');
+var resign      = require('./bot/resign');
 
 var token = process.env.telegram_token;
 // See https://developers.openshift.com/en/node-js-environment-variables.html
@@ -39,15 +40,7 @@ bot.onText(/\/accept/, accept);
 bot.onText(/\/decline/, decline);
 
 //resign a match
-bot.onText(/\/resign/, function(msg) {
-  console.log('MSG resign->',msg);
-  var chatId = msg.chat.id;
-  db.findUserById(chatId).then(function(snapshot) {
-    var user = snapshot.val();
-  }, function() {
-
-  });
-});
+bot.onText(/\/resign/, resign);
 
 //Report a match
 bot.onText(/\/lost/, function(msg) {
