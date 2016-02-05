@@ -1,7 +1,8 @@
 // Firebase Database custom methods
 'use strict';
+
 var Firebase = require('firebase');
-var Q = require('q')
+var Q = require('q');
 
 var db = function() {
   console.log('Pong Start');

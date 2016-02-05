@@ -1,3 +1,5 @@
+var db = require('../db/index.js');
+
 var resign = function(msg) {
   console.log('MSG resign->',msg);
   var chatId = msg.chat.id;

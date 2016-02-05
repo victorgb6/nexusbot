@@ -1,3 +1,5 @@
+var db = require('../db/index.js');
+
 var lost = function(msg) {
   console.log('MSG lost->',msg);
   var chatId = msg.chat.id,

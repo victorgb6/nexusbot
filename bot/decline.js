@@ -1,3 +1,5 @@
+var db = require('../db/index.js');
+
 var decline = function(msg) {
   console.log('MSG decline->',msg);
   var chatId = msg.chat.id;

@@ -1,3 +1,5 @@
+var db = require('../db/index.js');
+
 var register = function(msg, match) {
   console.log('MSG->',msg);
   var chatId = msg.chat.id;

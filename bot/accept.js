@@ -1,3 +1,5 @@
+var db = require('../db/index.js');
+
 var accept = function(msg) {
   console.log('MSG accept->',msg);
   var chatId = msg.chat.id;

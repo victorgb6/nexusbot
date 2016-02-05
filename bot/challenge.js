@@ -1,3 +1,5 @@
+var db = require('../db/index.js');
+
 var challenge = function(msg, match) {
   console.log('MSG->',msg,'MATCH->',match);
   var chatId = msg.chat.id,

@@ -1,7 +1,5 @@
 'use strict';
 var TelegramBot = require('node-telegram-bot-api');
-var Firebase    = require('firebase');
-var db          = require('./lib/db');
 var register    = require('./bot/register');
 var challenge   = require('./bot/challenge');
 var accept      = require('./bot/accept');
@@ -14,8 +12,6 @@ var token = process.env.telegram_token;
 var port = process.env.OPENSHIFT_NODEJS_PORT;
 var host = process.env.OPENSHIFT_NODEJS_IP;
 var domain = process.env.OPENSHIFT_APP_DNS;
-
-var fireRef = new Firebase('https://nexus-bot.firebaseio.com/');
 
 var bot = new TelegramBot(token, {
   webHook: {
