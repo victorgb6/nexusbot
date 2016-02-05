@@ -1,19 +1,20 @@
-var db = require('../db/index.js');
+var bot = require('./index');
+var matchs = require('../db/matchs');
 
 var lost = function(msg) {
   console.log('MSG lost->',msg);
-  var chatId = msg.chat.id,
-  loserId = msg.from.id,
-  arg = msg.text.split('/lost ')[1],
-  sets = arg.split(' ');
+  var chatId = msg.chat.id;
+  var loserId = msg.from.id;
+  var arg = msg.text.split('/lost ')[1];
+  var sets = arg.split(' ');
 
-  db.getPendingMatch(chatId).then(function(pendingMatchKey){
+  matchs.getPending(chatId).then(function(pendingMatchKey) {
     if (pendingMatchKey) {
-      db.findMatchById(pendingMatchKey).then(function(match) {
+      matchs.findById(pendingMatchKey).then(function(match) {
         console.log('Updating match->', pendingMatchKey, match, sets, loserId);
-        db.updateMatchResult(pendingMatchKey, match, sets, loserId).then( function(winnerId) {
+        matchs.updateResult(pendingMatchKey, match, sets, loserId).then(function(winnerId) {
           bot.sendMessage(chatId, 'Your result was saved correctly.');
-          bot.sendMessage(winnerId, 'Congratz! Your win against @'+msg.from.username+' was saved correctly.');
+          bot.sendMessage(winnerId, 'Congratz! Your win against @' + msg.from.username + ' was saved correctly.');
         }, function() {
           bot.sendMessage(chatId, 'There was an error saving your result.');
         });
