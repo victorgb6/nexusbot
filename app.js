@@ -7,19 +7,19 @@ var resign      = require('./bot/resign');
 var lost        = require('./bot/lost');
 
 //Register user to firebase
-bot.onText(/\/register/, register);
+bot.onText(/\/register/i, register);
 
 //challenge another user
-bot.onText(/\/challenge/, challenge);
+bot.onText(/\/challenge/i, challenge);
 
 //accept a challenge
-bot.onText(/\/accept/, accept);
+bot.onText(/\/accept/i, accept);
 
 //decline a challenge
-bot.onText(/\/decline/, decline);
+bot.onText(/\/decline/i, decline);
 
 //resign a match
-bot.onText(/\/resign/, resign);
+bot.onText(/\/resign/i, resign);
 
 //Report a match
-bot.onText(/\/lost/, lost);
+bot.onText(/\/lost/i, lost);
