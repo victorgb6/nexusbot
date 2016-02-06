@@ -18,7 +18,15 @@ var doChallenge = function(msg, match) {
       };
 
       challenges.save(user.key(), challenge).then(function() {
-        bot.sendMessage(user.key(), '@' + userTo + ' you have been challenge by @' + userFrom + ' type /accept or /decline to get started.');
+        bot.sendMessage(
+          user.key(),
+          '@' + userTo + ' you have been challenge by @' + userFrom + ' type /accept or /decline to get started.',
+          {
+            reply_markup: {
+              keyboard: [['Accept', 'Decline']]
+            }
+          }
+        );
         bot.sendMessage(userFromId, 'Your challenge has been sent to @' + userTo);
       }, function() {
         bot.sendMessage(userFromId, 'Challenge cannot be saved');
