@@ -13,4 +13,8 @@ var bot = new TelegramBot(token, {
   }
 });
 
+// OpenShift enroutes :443 request to OPENSHIFT_NODEJS_PORT
+bot.setWebHook(domain + ':443/bot' + token);
+console.log('webhook set!');
+
 module.exports = bot;
