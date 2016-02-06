@@ -1,6 +1,6 @@
 var TelegramBot = require('node-telegram-bot-api');
 
-var token = process.env.telegram_token;
+var token = process.env.TELEGRAM_TOKEN;
 // See https://developers.openshift.com/en/node-js-environment-variables.html
 var port = process.env.OPENSHIFT_NODEJS_PORT;
 var host = process.env.OPENSHIFT_NODEJS_IP;
