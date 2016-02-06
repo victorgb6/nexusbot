@@ -23,7 +23,10 @@ var doChallenge = function(msg, match) {
           '@' + userTo + ' you have been challenge by @' + userFrom + ' type /accept or /decline to get started.',
           {
             reply_markup: {
-              keyboard: [['Accept', 'Decline']]
+              keyboard: [['/Accept', '/Decline']],
+              resize_keyboard: true,
+              one_time_keyboard: true,
+              selective: true
             }
           }
         );
