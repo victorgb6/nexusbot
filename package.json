@@ -27,7 +27,13 @@
     "q": "^1.4.1",
     "request": "^2.67.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "faye-websocket": "^0.10.0",
+    "firebase-server": "^0.5.3",
+    "lodash": "^4.5.0",
+    "mocha": "^2.4.5",
+    "mockery": "^1.4.0"
+  },
   "bundleDependencies": [],
   "private": true,
   "main": "app.js"
