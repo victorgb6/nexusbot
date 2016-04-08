@@ -8,22 +8,22 @@ var lost          = require('./bot/lost');
 var createTeam  = require('./bot/createTeam');
 
 //Register user to firebase
-bot.onText(/\/register/i, register);
+bot.onText(/\bregister\b/i, register);
 
 //challenge another user
-bot.onText(/\/challenge/i, challenge);
+bot.onText(/\bchallenge\b/i, challenge);
 
 //accept a challenge
-bot.onText(/\/accept/i, accept);
+bot.onText(/\baccept\b/i, accept);
 
 //decline a challenge
-bot.onText(/\/decline/i, decline);
+bot.onText(/\bdecline\b/i, decline);
 
 //resign a match
-bot.onText(/\/resign/i, resign);
+bot.onText(/\bresign\b/i, resign);
 
 //Report a match
-bot.onText(/\/lost/i, lost);
+bot.onText(/\blost\b/i, lost);
 
 //Register a team to firebase
-bot.onText(/\/registerTeam/i, registerTeam);
+bot.onText(/\bregisterTeam\b/i, registerTeam);
