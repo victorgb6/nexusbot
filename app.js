@@ -1,10 +1,11 @@
-var bot         = require('./bot/index');
-var register    = require('./bot/register');
-var challenge   = require('./bot/challenge');
-var accept      = require('./bot/accept');
-var decline     = require('./bot/decline');
-var resign      = require('./bot/resign');
-var lost        = require('./bot/lost');
+var bot           = require('./bot/index');
+var register      = require('./bot/register');
+var challenge     = require('./bot/challenge');
+var accept        = require('./bot/accept');
+var decline       = require('./bot/decline');
+var resign        = require('./bot/resign');
+var lost          = require('./bot/lost');
+var registerTeam  = require('./bot/registerTeam');
 
 //Register user to firebase
 bot.onText(/\/register/i, register);
@@ -23,3 +24,6 @@ bot.onText(/\/resign/i, resign);
 
 //Report a match
 bot.onText(/\/lost/i, lost);
+
+//Register a team to firebase
+bot.onText(/\/registerTeam/i, register);
