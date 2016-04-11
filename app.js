@@ -5,7 +5,7 @@ var accept        = require('./bot/accept');
 var decline       = require('./bot/decline');
 var resign        = require('./bot/resign');
 var lost          = require('./bot/lost');
-var createTeam  = require('./bot/createTeam');
+var registerTeam  = require('./bot/registerTeam');
 
 //Register user to firebase
 bot.onText(/\bregister\b/i, register);
