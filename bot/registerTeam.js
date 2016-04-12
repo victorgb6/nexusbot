@@ -25,6 +25,8 @@ var registerTeam = function(msg, match) {
     users.findByName(user1).then(function(user){
       user1ID = user.key();
       console.log('Found User: ',user1ID);
+    }, function(){
+      console.log('User not found: ',user1ID);
     }).then(function(){
       teams.saveTeam(team, user1ID+'-'+user2ID).then(function() {
         bot.sendMessage(chatId, 'Your team has been registered. Go '+team.name+'!.');
