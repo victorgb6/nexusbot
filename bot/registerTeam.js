@@ -4,10 +4,10 @@ var users = require('../db/users');
 var teams = require('../db/teams');
 
 var registerTeam = function(msg, match) {
-  console.log('registerTeam MSG->');
+  console.log('registerTeam MSG->',msg);
   var chatId    = msg.chat.id;
   var args      = msg.text.split('/createteam ')[1];
-  var user1     = args.split(' ')[0].split('@')[1]);
+  var user1     = utils.clearUser(args.split(' ')[0]);
   var user1ID   = ''
   var user2     = msg.from.username;
   var user2ID   = msg.from.id;;
@@ -35,7 +35,7 @@ var registerTeam = function(msg, match) {
       console.log('User not found: ',user1ID);
     });
   } else {
-    console.log('Error createTeam: undefined users.');
+    console.log('Error registerTeam: undefined users.');
     bot.sendMessage(chatId, 'Please use this syntax: /registerTeam <@teamMate> <teamName>');
   }
 };
