@@ -13,7 +13,6 @@ var registerTeam = function(msg, match) {
   var user2ID   = msg.from.id;;
   var teamName  = args.split(' ')[1];
 
-  console.log('user1:', user1, 'user2:', user2, 'teamName:', teamName);
   if ( user1 !== '' && user2 !== '' && teamName !== '' ) {
     var team = {
       member1: user1,
@@ -34,6 +33,12 @@ var registerTeam = function(msg, match) {
       });
     }, function(){
       console.log('User not found: ',user1ID);
+    }).then(function(){
+      teams.save(team, user1ID+'-'+user2ID).then(function() {
+        bot.sendMessage(chatId, 'Your team has been registered. Go '+team.name+'!.');
+      }, function() {
+        bot.sendMessage(chatId, 'There was an error saving your team');
+      });
     });
   } else {
     console.log('Error registerTeam: undefined users.');
