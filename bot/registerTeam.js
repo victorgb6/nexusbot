@@ -4,7 +4,7 @@ var users = require('../db/users');
 var teams = require('../db/teams');
 
 var registerTeam = function(msg, match) {
-  console.log('registerTeam MSG->',msg);
+  console.log('registerTeam MSG->');
   var chatId    = msg.chat.id;
   var args      = msg.text.split('/createteam ')[1];
   var user1     = args.split(' ')[0].split('@')[1]);
