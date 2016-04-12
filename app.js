@@ -26,4 +26,4 @@ bot.onText(/\bresign\b/i, resign);
 bot.onText(/\blost\b/i, lost);
 
 //Register a team to firebase
-bot.onText(/\bcreateTeam\b/i, registerTeam);
+bot.onText(/\bregisterTeam\b/i, registerTeam);
