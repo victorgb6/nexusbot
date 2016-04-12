@@ -17,6 +17,24 @@ var teams = {
       });
     });
   },
+  findByName: function(name) {
+    var usersRef = fireRef.child('teams');
+    var name = name.toLowerCase();
+
+    return Q.Promise(function(resolve, reject) {
+      usersRef.orderByChild('name')
+              .startAt(name)
+              .endAt(name)
+              .limitToFirst(1)
+              .once('value', function(snapshot) {
+                if (snapshot.val() !== null) {
+                  resolve(snapshot.child(Object.keys(snapshot.val())[0]));
+                } else {
+                  reject();
+                }
+              });
+    });
+  };
 
 };
 

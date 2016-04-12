@@ -13,6 +13,7 @@ var registerTeam = function(msg, match) {
   var user2ID   = msg.from.id;;
   var teamName  = args.split(' ')[1];
 
+
   if ( user1 !== '' && user2 !== '' && teamName !== '' ) {
     var team = {
       member1: user1,
@@ -26,19 +27,24 @@ var registerTeam = function(msg, match) {
     users.findByName(user1).then(function(user){
       user1ID = user.key();
       console.log('Found User: ',user1ID);
-      teams.save(team, user1ID+'-'+user2ID).then(function() {
-        bot.sendMessage(chatId, 'Your team has been registered. Go '+team.name+'!.');
-      }, function() {
-        bot.sendMessage(chatId, 'There was an error saving your team');
-      });
+      bot.sendMessage(
+        user1ID,
+        '@'+user2+' wants you to join in the team '+teamName+'. What do you think?',
+        {
+          reply_markup: {
+            inline_keyboard: [[{text: '/AcceptTeam',
+                                callback_data: user1ID+'-'+user2ID},
+                                {text: '/DeclineTeam'}]]
+          }
+        }
+      );
+      // teams.save(team, user1ID+'-'+user2ID).then(function() {
+      //   bot.sendMessage(chatId, 'Your team has been registered. Go '+team.name+'!.');
+      // }, function() {
+      //   bot.sendMessage(chatId, 'There was an error saving your team');
+      // });
     }, function(){
       console.log('User not found: ',user1ID);
-    }).then(function(){
-      teams.save(team, user1ID+'-'+user2ID).then(function() {
-        bot.sendMessage(chatId, 'Your team has been registered. Go '+team.name+'!.');
-      }, function() {
-        bot.sendMessage(chatId, 'There was an error saving your team');
-      });
     });
   } else {
     console.log('Error registerTeam: undefined users.');
