@@ -6,7 +6,7 @@ var teams = require('../db/teams');
 var registerTeam = function(msg, match) {
   console.log('registerTeam MSG->',msg);
   var chatId    = msg.chat.id;
-  var args      = msg.text.split('/createteam ')[1];
+  var args      = msg.text.split('/registerTeam ')[1];
   var user1     = utils.clearUser(args.split(' ')[0]);
   var user1ID   = ''
   var user2     = msg.from.username;
