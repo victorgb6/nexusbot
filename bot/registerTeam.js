@@ -11,7 +11,7 @@ var registerTeam = function(msg, match) {
   var user1ID   = ''
   var user2     = msg.from.username;
   var user2ID   = msg.from.id;;
-  var teamName  = args.split(' ')[2];
+  var teamName  = args.split(' ')[1];
 
   console.log('user1:', user1, 'user2:', user2, 'teamName:', teamName);
   if ( user1 !== '' && user2 !== '' && teamName !== '' ) {
