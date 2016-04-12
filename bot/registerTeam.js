@@ -7,7 +7,7 @@ var registerTeam = function(msg, match) {
   console.log('registerTeam MSG->',msg);
   var chatId    = msg.chat.id;
   var args      = msg.text.split('/createteam ')[1];
-  var user1     = utils.clearUser(args.split(' ')[0]);
+  var user1     = args.split(' ')[0].split('@')[1]);
   var user1ID   = ''
   var user2     = msg.from.username;
   var user2ID   = msg.from.id;;
