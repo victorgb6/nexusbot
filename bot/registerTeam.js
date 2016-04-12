@@ -22,6 +22,7 @@ var registerTeam = function(msg, match) {
       wins: 0,
       loses: 0
     };
+    console.log('Team: ', team);
     users.findByName(user1).then(function(user){
       user1ID = user.key();
       console.log('Found User: ',user1ID);
