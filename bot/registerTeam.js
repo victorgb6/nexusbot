@@ -35,6 +35,7 @@ var registerTeam = function(msg, match) {
       console.log('User not found: ',user1ID);
     });
   } else {
+    console.log('Error createTeam: undefined users.');
     bot.sendMessage(chatId, 'Please use this syntax: /registerTeam <@teamMate> <teamName>');
   }
 };
