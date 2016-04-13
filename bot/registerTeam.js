@@ -32,7 +32,7 @@ var registerTeam = function(msg, match) {
         '@'+user2+' wants you to join in the team '+teamName+'. What do you think?',
         {
           reply_markup: {
-            keyboard: [[{text: '/AcceptTeam'},
+            inline_keyboard: [[{text: '/AcceptTeam'},
                                {text: '/DeclineTeam'}]]
           }
         }
