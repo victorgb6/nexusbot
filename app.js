@@ -27,3 +27,9 @@ bot.onText(/\/\blost\b/i, lost);
 
 //Register a team to firebase
 bot.onText(/\/\bregisterTeam\b/i, registerTeam);
+
+//Accept team invitation
+bot.onText(/\/\bacceptTeam\b/i, acceptTeam);
+
+//Decline team invitation
+bot.onText(/\/\bdeclineTeam\b/i, declineTeam);

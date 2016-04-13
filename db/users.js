@@ -56,6 +56,51 @@ var users = {
       });
     });
   },
+  addInvitation: function(id, invitationID) {
+    var userRef = fireRef.child('users/' + id);
+
+    return Q.Promise(function(resolve, reject) {
+      userRef.update({pendingInvitation: invitationID}, function(error) {
+        if (error) {
+          console.log('Invitation could not be saved.' + error);
+          reject(error);
+        } else {
+          console.log('Invitation saved successfully.');
+          resolve();
+        }
+      });
+    });
+  },
+  getInvitation: function(id) {
+    var userRef = fireRef.child('users/' + id);
+
+    return Q.Promise(function(resolve, reject) {
+      userRef.once('value', function(snapshot) {
+        var user = snapshot.val();
+
+        if (user !== null && user.pendingInvitation) {
+          resolve(user.pendingInvitation);
+        } else {
+          reject();
+        }
+      });
+    });
+  },
+  removeInvitation: function(id) {
+    var userRef = fireRef.child('users/' + id);
+
+    return Q.Promise(function(resolve, reject) {
+      userRef.update({pendingInvitation: false}, function(error) {
+        if (error) {
+          console.log('Invitation could not be removed.' + error);
+          reject(error);
+        } else {
+          console.log('Invitation removed successfully.');
+          resolve();
+        }
+      });
+    });
+  },
 
   updateScores: function(winnerId, loserId) {
     var usersRef = fireRef.child('users');

@@ -27,16 +27,19 @@ var registerTeam = function(msg, match) {
     users.findByName(user1).then(function(user){
       user1ID = user.key();
       console.log('Found User: ',user1ID);
-      bot.sendMessage(
-        user1ID,
-        '@'+user2+' wants you to join in the team '+teamName+'. What do you think?',
-        {
-          reply_markup: {
-            inline_keyboard: [[{text: '/AcceptTeam'},
-                               {text: '/DeclineTeam'}]]
+      users.addInvitation(user1ID, user2ID).then(function(){
+        bot.sendMessage(
+          user1ID,
+          '@'+user2+' wants you to join in the team '+teamName+'. What do you think?',
+          {
+            reply_markup: {
+              keyboard: [[{text: '/AcceptTeam'},
+                          {text: '/DeclineTeam'}]],
+              one_time_keyboard: true
+            }
           }
-        }
-      );
+        );
+      });
       // teams.save(team, user1ID+'-'+user2ID).then(function() {
       //   bot.sendMessage(chatId, 'Your team has been registered. Go '+team.name+'!.');
       // }, function() {
