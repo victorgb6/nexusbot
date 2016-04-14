@@ -15,7 +15,6 @@ var registerTeam = function(msg, match) {
 
 
   if ( user1 !== '' && user2 !== '' && teamName !== '' ) {
-    console.log('Team: ', team);
     users.findByName(user1).then(function(user){
       user1ID = user.key();
       console.log('Found User: ',user1ID);
