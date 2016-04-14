@@ -58,7 +58,7 @@ var users = {
   },
   addInvitation: function(id, invitationID) {
     var userRef = fireRef.child('users/' + id);
-
+    console.log('Adding Invitation: ', id);
     return Q.Promise(function(resolve, reject) {
       userRef.update({pendingInvitation: invitationID}, function(error) {
         if (error) {
