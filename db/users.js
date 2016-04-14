@@ -56,9 +56,10 @@ var users = {
       });
     });
   },
+
   addInvitation: function(id, invitationID) {
-    var userRef = fireRef.child('users/' + id);
     console.log('Adding Invitation: ', id);
+    var userRef = fireRef.child('users/' + id);
     return Q.Promise(function(resolve, reject) {
       userRef.update({pendingInvitation: invitationID}, function(error) {
         if (error) {
@@ -71,6 +72,7 @@ var users = {
       });
     });
   },
+
   getInvitation: function(id) {
     var userRef = fireRef.child('users/' + id);
 
@@ -86,6 +88,7 @@ var users = {
       });
     });
   },
+
   removeInvitation: function(id) {
     var userRef = fireRef.child('users/' + id);
 
