@@ -1,4 +1,4 @@
-var bot = require('./index');
+var bot   = require('./index');
 var utils = require('../utils/utils');
 var users = require('../db/users');
 var teams = require('../db/teams');
