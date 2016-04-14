@@ -15,19 +15,11 @@ var registerTeam = function(msg, match) {
 
 
   if ( user1 !== '' && user2 !== '' && teamName !== '' ) {
-    var team = {
-      member1: user1,
-      member2: user2,
-      name: teamName.toLowerCase(),
-      challenge: false,
-      wins: 0,
-      loses: 0
-    };
     console.log('Team: ', team);
     users.findByName(user1).then(function(user){
       user1ID = user.key();
       console.log('Found User: ',user1ID);
-      users.addInvitation(user1ID, user2ID).then(function(){
+      users.addInvitation(user1ID, user2ID+'-'+team.name).then(function(){
         bot.sendMessage(
           user1ID,
           '@'+user2+' wants you to join in the team '+teamName+'. What do you think?',
@@ -40,11 +32,6 @@ var registerTeam = function(msg, match) {
           }
         );
       });
-      // teams.save(team, user1ID+'-'+user2ID).then(function() {
-      //   bot.sendMessage(chatId, 'Your team has been registered. Go '+team.name+'!.');
-      // }, function() {
-      //   bot.sendMessage(chatId, 'There was an error saving your team');
-      // });
     }, function(){
       console.log('User not found: ',user1ID);
     });
