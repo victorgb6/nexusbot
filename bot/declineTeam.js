@@ -4,10 +4,10 @@ var users = require('../db/users');
 var declineTeam = function(msg, match) {
   console.log('MSG declineTeam->',msg);
   var chatId  = msg.chat.id;
-  
+
   users.getInvitation(chatId).then(function(invitationID){
     if (invitationID) {
-      users.removeInvitation(invitationID).then(function(){
+      users.removeInvitation(chatId).then(function(){
         bot.sendMessage(chatId, 'Your team invitation have been rejected.');
       });
     } else {
