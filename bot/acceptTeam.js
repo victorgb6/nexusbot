@@ -11,8 +11,8 @@ var acceptTeam = function(msg, match) {
   users.getInvitation(chatId).then(function(invitationID){
     console.log('Got invitation: ', invitationID);
     if (invitationID) {
-      var teamname = invitationID.split('-')[0];
-      var user1ID  = invitationID.split('-')[1];
+      var user1ID  = invitationID.split('-')[0];
+      var teamName = invitationID.split('-')[1];
       var team = {
         member1: user1ID,
         member2: user2ID,
@@ -21,6 +21,7 @@ var acceptTeam = function(msg, match) {
         wins: 0,
         loses: 0
       };
+      console.log('Team:', team);
       users.removeInvitation(invitationID).then(function(){
         teams.save(team, user1ID+'-'+user2ID).then(function() {
           bot.sendMessage(chatId, 'Your team has been registered. Go '+team.name+'!.');
