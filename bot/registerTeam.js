@@ -30,6 +30,8 @@ var registerTeam = function(msg, match) {
             }
           }
         );
+      }, function(error){
+        console.log('Error adding Invitation', error);
       });
     }, function(){
       console.log('User not found: ',user1ID);
