@@ -18,7 +18,7 @@ var registerTeam = function(msg, match) {
     users.findByName(user1).then(function(user){
       user1ID = user.key();
       console.log('Found User: ',user1ID);
-      users.addInvitation(user1ID, user2ID+'-'+team.name).then(function(){
+      users.addInvitation(user1ID, user2ID+'-'+user1ID).then(function(){
         bot.sendMessage(
           user1ID,
           '@'+user2+' wants you to join in the team '+teamName+'. What do you think?',
