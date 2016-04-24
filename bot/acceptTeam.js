@@ -9,6 +9,7 @@ var acceptTeam = function(msg, match) {
   var invitationID = '';
 
   users.getInvitation(chatId).then(function(invitationID){
+    console.log('Got invitation: ', invitationID);
     if (invitationID) {
       var teamname = invitationID.split('-')[0];
       var user1ID  = invitationID.split('-')[1];
