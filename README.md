@@ -1,3 +1,7 @@
-The OpenShift `nodejs` cartridge documentation can be found at:
+#Ping Pong Bot for Telegram
 
-http://openshift.github.io/documentation/oo_cartridge_guide.html#nodejs
+####It's a Telegram bot to save ping pong matches results.
+
+##Available Commands
+
+* _register_: Register a player with his Telegram user in the database.
