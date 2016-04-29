@@ -1,6 +1,7 @@
 var bot = require('./index');
 var users = require('../db/users');
 var challenges = require('../db/challenges');
+var challengeTeam = require('./challengeTeam');
 
 var doChallenge = function(msg, match) {
   console.log('MSG->',msg,'MATCH->',match);
@@ -35,8 +36,8 @@ var doChallenge = function(msg, match) {
         bot.sendMessage(userFromId, 'Challenge cannot be saved');
       });
     }, function() {
-      console.log('Challenged user doesn\'t exists.');
-      bot.sendMessage(chatId, 'Challenged user @' + userTo + ' is not registered yet.');
+      console.log('Challenged user doesn\'t exists. Looking if is a team.');
+      doChallengeTeam(userTo);
     });
   }, function() {
     console.log('User doesn\'t exists.');
