@@ -7,7 +7,7 @@ var doChallengeTeam = function(teamName){
   teams.findByName(teamId).then(function(team){
     var challenge = {teamFromName: '',
                      teamFromId: ''};
-    challengeTeams.save();
+    challengeTeams.save(challenge);
   });
   //bot.sendMessage(chatId, 'Challenged user @' + userTo + ' is not registered yet.');
 };
