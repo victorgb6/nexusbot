@@ -22,7 +22,7 @@ var acceptTeam = function(msg, match) {
         loses: 0
       };
       console.log('Team:', team);
-      users.removeInvitation(user2ID).then(function(){
+      users.removeInvitation(user2ID, team.name).then(function(){
         teams.save(team, user1ID+'-'+user2ID).then(function() {
           bot.sendMessage(chatId, 'Your team has been registered. Go '+team.name+'!.');
         }, function() {
