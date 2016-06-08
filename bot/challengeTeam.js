@@ -3,7 +3,7 @@ var challengeTeams = require('../db/challengesTeam');
 var bot = require('./index');
 
 
-var doChallengeTeam = function(teamName){
+var challengeTeam = function(teamName){
   teams.findByName(teamId).then(function(team){
     var challenge = {teamFromName: '',
                      teamFromId: ''};
@@ -13,4 +13,4 @@ var doChallengeTeam = function(teamName){
 };
 
 
-module.exports = doChallengeTeam;
+module.exports = challengeTeam;
