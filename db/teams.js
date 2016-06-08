@@ -28,8 +28,10 @@ var teams = {
               .limitToFirst(1)
               .once('value', function(snapshot) {
                 if (snapshot.val() !== null) {
+                  console.log('Team found successfully.');
                   resolve(snapshot.child(Object.keys(snapshot.val())[0]));
                 } else {
+                  console.log('Team could not be found.' + error);
                   reject();
                 }
               });
