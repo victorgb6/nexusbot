@@ -1,13 +1,14 @@
-var bot           = require('./bot/index');
-var register      = require('./bot/register');
-var challenge     = require('./bot/challenge');
-var accept        = require('./bot/accept');
-var decline       = require('./bot/decline');
-var resign        = require('./bot/resign');
-var lost          = require('./bot/lost');
-var registerTeam  = require('./bot/registerTeam');
-var acceptTeam    = require('./bot/acceptTeam');
-var declineTeam   = require('./bot/declineTeam');
+var bot             = require('./bot/index');
+var register        = require('./bot/register');
+var challenge       = require('./bot/challenge');
+var accept          = require('./bot/accept');
+var decline         = require('./bot/decline');
+var resign          = require('./bot/resign');
+var lost            = require('./bot/lost');
+var registerTeam    = require('./bot/registerTeam');
+var acceptTeam      = require('./bot/acceptTeam');
+var declineTeam     = require('./bot/declineTeam');
+var challengeTeam   = require('./bot/challengeTeam');
 
 //Register user to firebase
 bot.onText(/\/\bregister\b/i, register);
@@ -35,3 +36,6 @@ bot.onText(/\/\bacceptTeam\b/i, acceptTeam);
 
 //Decline team invitation
 bot.onText(/\/\bdeclineTeam\b/i, declineTeam);
+
+//Decline team invitation
+bot.onText(/\/\bchallengeTeam\b/i, challengeTeam);
