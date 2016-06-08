@@ -89,11 +89,11 @@ var users = {
     });
   },
 
-  removeInvitation: function(id) {
+  removeInvitation: function(id, teamId) {
     var userRef = fireRef.child('users/' + id);
 
     return Q.Promise(function(resolve, reject) {
-      userRef.update({pendingInvitation: false}, function(error) {
+      userRef.update({pendingInvitation: false, teams: [teamId]}, function(error) {
         if (error) {
           console.log('Invitation could not be removed.' + error);
           reject(error);
@@ -126,6 +126,22 @@ var users = {
       }, function(error) {
         if (error) {
           console.log('Error updating loser:',winnerId,'e: ', error);
+        }
+      });
+    });
+  },
+  findUserTeams: function(id) {
+    var usersRef = fireRef.child('users/'+ id);
+    var name = name.toLowerCase();
+
+    return Q.Promise(function(resolve, reject) {
+      userRef.once('value', function(snapshot) {
+        var user = snapshot.val();
+
+        if (user !== null && user.teams) {
+          resolve(user.teams);
+        } else {
+          reject();
         }
       });
     });
