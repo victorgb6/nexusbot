@@ -1,5 +1,4 @@
-var teams = require('../db/teams');
-var challengeTeams = require('../db/challengesTeam');
+
 var bot = require('./index');
 
 
