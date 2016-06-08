@@ -37,5 +37,5 @@ bot.onText(/\/\bacceptTeam\b/i, acceptTeam);
 //Decline team invitation
 bot.onText(/\/\bdeclineTeam\b/i, declineTeam);
 
-//Decline team invitation
+//Challenge another team
 bot.onText(/\/\bchallengeTeam\b/i, challengeTeam);
