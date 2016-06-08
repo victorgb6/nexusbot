@@ -3,7 +3,8 @@ var challengeTeams = require('../db/challengesTeam');
 var bot = require('./index');
 
 
-var challengeTeam = function(teamName){
+var challengeTeam = function(msg, match){
+  console.log('MSG challengeTeam->',msg);
   teams.findByName(teamId).then(function(team){
     var challenge = {teamFromName: '',
                      teamFromId: ''};
