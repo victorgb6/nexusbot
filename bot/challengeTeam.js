@@ -6,8 +6,8 @@ var challengeTeam = function(msg, match){
   console.log('MSG challengeTeam->',msg);
   var chatId       = msg.chat.id;
   var userFromId   = msg.chat.id;
-  var team         = msg.text.split('/challengeTeam ')[1];
-  teams.findByName(teamId).then(function(team){
+  var teamName         = msg.text.split('/challengeTeam ')[1];
+  teams.findByName(teamName).then(function(team){
     var challenge = {teamFromName: '',
                      teamFromId: ''};
     console.log('Found Team->', team);
