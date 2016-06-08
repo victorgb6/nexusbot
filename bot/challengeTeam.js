@@ -11,6 +11,6 @@ var challengeTeam = function(msg, match){
   //   console.log('Found Team->', team);
   // });
   //bot.sendMessage(chatId, 'Challenged user @' + userTo + ' is not registered yet.');
-}:
+};
 
 module.exports = challengeTeam;
