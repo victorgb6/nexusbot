@@ -9,6 +9,7 @@ var registerTeam    = require('./bot/registerTeam');
 var acceptTeam      = require('./bot/acceptTeam');
 var declineTeam     = require('./bot/declineTeam');
 var challengeTeam   = require('./bot/challengeTeam');
+var request         = require('request');
 
 //Register user to firebase
 bot.onText(/\/\bregister\b/i, register);
@@ -42,5 +43,12 @@ bot.onText(/\/\bchallengeTeam\b/i, challengeTeam);
 
 //Global message call to wit.ai
 bot.on('message', function(msg){
-  console.log('GLOBAL->', msg);
+  //console.log('GLOBAL->', msg);
+  request({url:'https://api.wit.ai/message',
+           qs:{'q': msg.text,
+               'access_token' : '6IG22RHDSSNCYDKQO7XOCHUUQPW5ZE5X'}}, 
+           function(err, response, body) {
+            if(err) { console.log(err); return; }
+            console.log("Get response: " + response.statusCode);
+          });
 });
