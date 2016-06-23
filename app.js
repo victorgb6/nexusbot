@@ -39,3 +39,8 @@ bot.onText(/\/\bdeclineTeam\b/i, declineTeam);
 
 //Challenge another team
 bot.onText(/\/\bchallengeTeam\b/i, challengeTeam);
+
+//Global message call to wit.ai
+bot.on('message', function(msg){
+  console.log('GLOBAL->', msg);
+});
