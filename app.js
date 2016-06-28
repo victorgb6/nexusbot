@@ -15,7 +15,7 @@ var wit             = require('./bot/wit');
 bot.onText(/\/\bregister\b/i, register);
 
 //challenge another user
-bot.onText(/\/\bchallenge\b/i, challenge);
+bot.onText(/\/\bchallenge\b/i, challenge.doChallenge);
 
 //accept a challenge
 bot.onText(/\/\baccept\b/i, accept);
