@@ -21,6 +21,7 @@ var wit = {
   },
   checkMsg: function(msg) {
     wit.processMsg(msg).then(function(body){
+      console.log('WIT->', body);
       switch(body.intent){
         case 'register': register(msg); break;
       }
