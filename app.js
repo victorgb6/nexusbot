@@ -46,10 +46,13 @@ bot.on('message', function(msg){
   //console.log('GLOBAL->', msg);
   request({url:'https://api.wit.ai/message',
            qs:{'q': msg.text,
-               'access_token' : '6IG22RHDSSNCYDKQO7XOCHUUQPW5ZE5X'}},
+               'access_token' : process.env.WIT_TOKEN}},
            function(err, response, body) {
             if(err) { console.log(err); return; }
             console.log("WIT: " + body);
+            switch(body.intent){
+              case: ''
+            }
 
           });
 });
