@@ -8,7 +8,6 @@ var witURL   = 'https://api.wit.ai/message';
 var wit = {
   processMsg: function(msg) {
     var query = msg.text;
-    console.log('processing', msg);
     return Q.Promise(function(resolve, reject) {
       request({url: witURL, qs: {'q': msg.text, 'access_token': process.env.WIT_TOKEN}},
                function(err, response, body) {
@@ -16,6 +15,7 @@ var wit = {
                   console.log('Wit error:', err);
                   reject();
                 }
+                console.log('Wit Success');
                 resolve(body);
               });
     });
