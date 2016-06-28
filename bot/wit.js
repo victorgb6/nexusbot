@@ -17,7 +17,7 @@ var wit = {
                   reject();
                 }
                 console.log('Wit Success');
-                resolve(body);
+                resolve(JSON.parse(body));
               });
     });
   },
