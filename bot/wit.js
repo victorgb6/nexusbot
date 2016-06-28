@@ -25,7 +25,7 @@ var wit = {
     wit.processMsg(msg).then(function(body){
       console.log('WIT->', body);
       switch(body.intent){
-        case 'registerUser': register(msg); break;
+        case 'registerUser': console.log('wit register');register(msg); break;
       }
     });
   }
