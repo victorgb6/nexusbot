@@ -48,7 +48,7 @@ bot.on('message', function(msg){
   //console.log('GLOBAL->', msg);
   request({url:'https://api.wit.ai/message',
            qs:{'q': msg.text,
-               'access_token' : wit_token
+               'access_token' : '1'
               }
              },
            function(err, response, body) {
