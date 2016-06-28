@@ -9,7 +9,7 @@ var registerTeam    = require('./bot/registerTeam');
 var acceptTeam      = require('./bot/acceptTeam');
 var declineTeam     = require('./bot/declineTeam');
 var challengeTeam   = require('./bot/challengeTeam');
-var challengeTeam   = require('./bot/wit');
+var wit             = require('./bot/wit');
 var request         = require('request');
 
 //Register user to firebase
