@@ -11,6 +11,7 @@ var declineTeam     = require('./bot/declineTeam');
 var challengeTeam   = require('./bot/challengeTeam');
 var request         = require('request');
 var wit_token       = process.env.WIT_TOKEN;
+console.log('T->', wit_token);
 
 //Register user to firebase
 bot.onText(/\/\bregister\b/i, register);
