@@ -10,6 +10,7 @@ var acceptTeam      = require('./bot/acceptTeam');
 var declineTeam     = require('./bot/declineTeam');
 var challengeTeam   = require('./bot/challengeTeam');
 var request         = require('request');
+var wit_token       = process.env.WIT_TOKEN;
 
 //Register user to firebase
 bot.onText(/\/\bregister\b/i, register);
@@ -46,7 +47,9 @@ bot.on('message', function(msg){
   //console.log('GLOBAL->', msg);
   request({url:'https://api.wit.ai/message',
            qs:{'q': msg.text,
-               'access_token' : process.env.WIT_TOKEN}},
+               'access_token' : wit_token
+              }
+             },
            function(err, response, body) {
             if(err) { console.log(err); return; }
             console.log("WIT: " + body);
