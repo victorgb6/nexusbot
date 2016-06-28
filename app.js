@@ -10,7 +10,6 @@ var acceptTeam      = require('./bot/acceptTeam');
 var declineTeam     = require('./bot/declineTeam');
 var challengeTeam   = require('./bot/challengeTeam');
 var wit             = require('./bot/wit');
-var request         = require('request');
 
 //Register user to firebase
 bot.onText(/\/\bregister\b/i, register);

@@ -1,6 +1,7 @@
 var bot      = require('./index');
 var Q        = require('q');
 var register = require('../bot/register');
+var request  = require('request');
 var witURL   = 'https://api.wit.ai/message';
 
 
