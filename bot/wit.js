@@ -17,16 +17,18 @@ var wit = {
                   console.log('Wit error:', err);
                   reject();
                 }
-                console.log('Wit Success');
+                console.log('Wit Success:', body);
                 resolve(JSON.parse(body));
               });
     });
   },
   checkMsg: function(msg) {
     wit.processMsg(msg).then(function(body){
-      console.log('WIT->', body);
-      switch(body.outcomes[0].intent){
-        case 'registerUser': register(msg); break;
+      if (body.outcomes[0].confidence > 0.3) {
+        switch(body.outcomes[0].intent) {
+          case 'registerUser': register(msg); break;
+          //case 'challenge': challenge.doChallenge(msg,'', ); break;
+        }
       }
     });
   }

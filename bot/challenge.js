@@ -8,13 +8,13 @@ var challengeObj = {
     return text.split('/challenge @')[1]
   },
 
-  doChallenge: function(msg, match) {
+  doChallenge: function(msg, match, userTo) {
     console.log('MSG->',msg,'MATCH->',match);
     var chatId = msg.chat.id;
     var userFromId = msg.from.id;
     var userFrom = msg.from.username;
     var userToId = null;
-    var userTo = msg.text.split('/challenge @')[1];
+    userTo = userTo || challengeObj.parseUser(msg.text);
 
     users.findById(userFromId).then(function() {
       users.findByName(userTo.toLowerCase()).then(function(user) {
