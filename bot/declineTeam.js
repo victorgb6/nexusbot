@@ -6,6 +6,7 @@ var declineTeam = function(msg, match) {
   var chatId  = msg.chat.id;
 
   users.getInvitation(chatId).then(function(invitationID){
+    console.log('GETINVITATION:', invitationID)
     if (invitationID) {
       users.removeInvitation(chatId).then(function(){
         bot.sendMessage(chatId, 'Your team invitation have been rejected.');
