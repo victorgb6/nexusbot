@@ -2,6 +2,7 @@ var bot = require('./index');
 var users = require('../db/users');
 var challenges = require('../db/challenges');
 var challengeTeam = require('./challengeTeam');
+var utils = require('.utils/utils');
 
 var challengeObj = {
   parseUser: function(text) {
@@ -14,7 +15,7 @@ var challengeObj = {
     var userFromId = msg.from.id;
     var userFrom = msg.from.username;
     var userToId = null;
-    userTo = userTo || challengeObj.parseUser(msg.text);
+    userTo = utils.clearUser(userTo) || challengeObj.parseUser(msg.text);
     console.log('Challenge UserTo->', userTo);
 
     users.findById(userFromId).then(function() {
