@@ -92,7 +92,8 @@ var users = {
     var userRef = fireRef.child('users/' + id);
 
     return Q.Promise(function(resolve, reject) {
-      userRef.update({pendingInvitation: false, teams: [teamId]}, function(error) {
+      //TODO: Check team array to remove teams that the user ins not part.
+      userRef.update({pendingInvitation: false, teams: []}, function(error) {
         if (error) {
           console.log('Invitation could not be removed.' + error);
           reject(error);
