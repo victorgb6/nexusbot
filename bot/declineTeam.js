@@ -14,7 +14,7 @@ var declineTeam = function(msg, match) {
         bot.sendMessage(chatId, 'Your team invitation have been rejected.');
       });
     } else {
-      bot.sendMessage(chatId, 'You don\'t have team invitations.');
+      bot.sendMessage(chatId, 'Your invitation has been corrupted.');
     }
   }, function(){
     bot.sendMessage(chatId, 'You don\'t have team invitations. (Forever alone).');
