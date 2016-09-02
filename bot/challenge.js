@@ -15,6 +15,7 @@ var challengeObj = {
     var userFrom = msg.from.username;
     var userToId = null;
     userTo = userTo || challengeObj.parseUser(msg.text);
+    console.log('Challenge UserTo->', userTo);
 
     users.findById(userFromId).then(function() {
       users.findByName(userTo.toLowerCase()).then(function(user) {
