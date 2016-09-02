@@ -3,12 +3,14 @@ var users = require('../db/users');
 
 var declineTeam = function(msg, match) {
   console.log('MSG declineTeam->',msg);
-  var chatId  = msg.chat.id;
+  var chatId = msg.chat.id;
+  var teamId = '';
 
   users.getInvitation(chatId).then(function(invitationID){
     console.log('GETINVITATION:', invitationID)
     if (invitationID) {
-      users.removeInvitation(chatId).then(function(){
+      teamId = invitationID.split('-')[1];
+      users.removeInvitation(chatId, teamId).then(function(){
         bot.sendMessage(chatId, 'Your team invitation have been rejected.');
       });
     } else {
