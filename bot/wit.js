@@ -27,7 +27,7 @@ var wit = {
       if (body.outcomes[0].confidence > 0.3) {
         switch(body.outcomes[0].intent) {
           case 'registerUser': register(msg); break;
-          //case 'challenge': challenge.doChallenge(msg,'', ); break;
+          case 'challenge': challenge.doChallenge(msg,'', body.outcomes[0].entities.contact[0].value); break;
         }
       }
     });
