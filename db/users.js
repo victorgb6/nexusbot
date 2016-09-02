@@ -79,7 +79,7 @@ var users = {
     return Q.Promise(function(resolve, reject) {
       userRef.once('value', function(snapshot) {
         var user = snapshot.val();
-
+        console.log('GETINVITATION:', user);
         if (user !== null && user.pendingInvitation) {
           resolve(user.pendingInvitation);
         } else {
