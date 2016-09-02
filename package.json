@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "firebase": "^2.3.2",
-    "node-telegram-bot-api": "^0.17.0",
+    "node-telegram-bot-api": "^0.20.1",
     "request": "^2.72.0"
   },
   "devDependencies": {},
