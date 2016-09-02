@@ -16,6 +16,8 @@ var declineTeam = function(msg, match) {
     } else {
       bot.sendMessage(chatId, 'You don\'t have team invitations. (Forever alone).');
     }
+  }, function(){
+    bot.sendMessage(chatId, 'You don\'t have team invitations. (Forever alone).');
   });
 }
 
