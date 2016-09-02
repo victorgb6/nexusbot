@@ -2,7 +2,7 @@ var bot = require('./index');
 var users = require('../db/users');
 var challenges = require('../db/challenges');
 var challengeTeam = require('./challengeTeam');
-//var utils = require('../utils/utils');
+var utils = require('../utils/utils');
 
 var challengeObj = {
   parseUser: function(text) {
