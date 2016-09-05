@@ -9,7 +9,6 @@ var bot = new TelegramBot(token, {
   }
 });
 
-// OpenShift enroutes :443 request to OPENSHIFT_NODEJS_PORT
 bot.setWebHook('https://victorgil.me' + '/bot' + token);
 console.log('webhook set!');
 
