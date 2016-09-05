@@ -3,7 +3,7 @@ var utils = require('../utils/utils');
 var users = require('../db/users');
 
 var rank = function(msg, match) {
-  console.log('MSG->',msg);
+  console.log('Rank MSG->',msg);
   var chatId  = msg.chat.id;
   var usersArr   = msg.text.split('@').slice(1);
 
