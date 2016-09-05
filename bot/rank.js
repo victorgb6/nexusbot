@@ -4,8 +4,8 @@ var users = require('../db/users');
 
 var rank = function(msg, match) {
   console.log('Rank MSG->',msg);
-  var chatId  = msg.chat.id;
-  var usersArr   = msg.text.split('@').slice(1);
+  var chatId   = msg.chat.id;
+  var usersArr = msg.text.split('@').slice(1);
 
   if (usersArr.length == 0) {
     usersArr.push(msg.from.username);

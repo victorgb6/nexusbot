@@ -9,6 +9,7 @@ var registerTeam    = require('./bot/registerTeam');
 var acceptTeam      = require('./bot/acceptTeam');
 var declineTeam     = require('./bot/declineTeam');
 var challengeTeam   = require('./bot/challengeTeam');
+var rank            = require('./bot/rank');
 var wit             = require('./bot/wit');
 
 //Register user to firebase
@@ -40,6 +41,9 @@ bot.onText(/\/\bdeclineTeam\b/i, declineTeam);
 
 //Challenge another team
 bot.onText(/\/\bchallengeTeam\b/i, challengeTeam);
+
+//Get rank for users as paramenter or current user
+bot.onText(/\/\brank\b/i, rank);
 
 //Global message call to wit.ai
 bot.on('message', wit.checkMsg);
