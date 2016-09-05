@@ -13,6 +13,7 @@ var rank = function(msg, match) {
 
   usersArr.map(function(name){
     users.findByName(name).then(function(u){
+      console.log('rank u:', u);
       var res = u.username + ': wins ' + u.wins + ' , loses ' + u.loses;
       bot.sendMessage(chatId, res);
     }, function(){
