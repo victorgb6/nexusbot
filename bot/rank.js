@@ -12,6 +12,7 @@ var rank = function(msg, match) {
   }
 
   usersArr.map(function(name){
+    console.log('Rank getting: ', name);
     users.findByName(name).then(function(u){
       console.log('rank u:', u.val());
       u = u.val();
