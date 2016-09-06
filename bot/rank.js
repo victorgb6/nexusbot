@@ -23,6 +23,7 @@ var rank = function(msg, match) {
     }, function(){
       bot.sendMessage(chatId, 'Something went wrong getting your rank.');
     });*/
+    console.log('Queue:', queue);
   });
   Q.all(queue).done(function (values) {
     values.map(function(u){
