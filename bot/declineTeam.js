@@ -7,7 +7,7 @@ var declineTeam = function(msg, match) {
   var teamId = '';
 
   users.getInvitation(chatId).then(function(invitationID){
-    console.log('GETINVITATION:', invitationID)
+    console.log('GETINVITATION:', invitationID);
     if (invitationID) {
       teamId = invitationID.split('-')[1];
       users.removeInvitation(chatId, teamId).then(function(){

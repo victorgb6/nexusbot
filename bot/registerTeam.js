@@ -10,7 +10,7 @@ var registerTeam = function(msg, match) {
   var user1     = utils.clearUser(args.split(' ')[0]);
   var user1ID   = ''
   var user2     = msg.from.username;
-  var user2ID   = msg.from.id;;
+  var user2ID   = msg.from.id;
   var teamName  = args.split(' ')[1];
 
 

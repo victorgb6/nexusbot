@@ -24,7 +24,7 @@ var wit = {
   },
   checkMsg: function(msg) {
     wit.processMsg(msg).then(function(body){
-      if (body.outcomes[0].confidence > 0.3) {
+      if (body.outcomes[0].confidence > 0.5) {
         switch(body.outcomes[0].intent) {
           case 'registerUser': register(msg); break;
           case 'challenge': challenge.doChallenge(msg,'', body.outcomes[0].entities.contact[0].value); break;
