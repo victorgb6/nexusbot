@@ -16,6 +16,7 @@ var rank = function(msg, match) {
     queue = queue.then(function(u){
       u = u.val();
       ranks.push()
+      console.log('Promises getting: ', ranks);
       return users.findByName(name)
     });
     /*console.log('Rank getting: ', name);
@@ -30,6 +31,7 @@ var rank = function(msg, match) {
   });
   queue.then(function(){
     ranks.map(function(u){
+      console.log('Rank getting: ', u);
       var res = u.username + ': wins ' + u.wins + ' , loses ' + u.loses;
       bot.sendMessage(chatId, res);
     })
