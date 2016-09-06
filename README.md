@@ -10,3 +10,4 @@
 * **/decline**: Decline a challenge if the user has one pending.
 * **/resign**: Resign a match that has already been accepted.
 * **/lost [your set score]:[their set score],[your set score]:[their set score]:**: The player who lost a match must input the score with the current format.
+* **/rank <@user>**: Get the wins/loses from that user, if not user specified it returns the stats from the current user.
