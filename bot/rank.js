@@ -12,7 +12,7 @@ var rank = function(msg, match) {
   }
 
   console.log('Rank getting: ', name);
-  users.findByName(name).then(function(u){
+  users.findByName(usersArr[0]).then(function(u){
     console.log('rank u:', u.val());
     u = u.val();
     var res = u.username + ': wins ' + u.wins + ' , loses ' + u.loses;
@@ -20,7 +20,7 @@ var rank = function(msg, match) {
   }, function(){
     bot.sendMessage(chatId, 'Something went wrong getting your rank.');
   });
-  
+
 };
 
 module.exports = rank;
