@@ -22,8 +22,8 @@
     "npm": ">= 1.0.0"
   },
   "dependencies": {
-    "firebase": "^2.3.2",
-    "node-telegram-bot-api": "^0.20.1",
+    "firebase": "^4.1.2",
+    "node-telegram-bot-api": "^0.27.1",
     "q": "^1.4.1",
     "request": "^2.72.0"
   },
